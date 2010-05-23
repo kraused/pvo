@@ -12,7 +12,8 @@ int main( int argc, char** argv ) {
     pvo_init( MPI_COMM_WORLD );
 
     if( 0 == pvo_world_rank() ) {
-        fh = pvo_low_io_file_handle_create( PVO_LOW_IO_SINGLE );
+        if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_SINGLE, &fh ))
+            PVO_DIE( "create failed." );
         if( -1 == fh->open( fh, "t0.dat", PVO_COMM_WORLD ))
             PVO_DIE( "open failed." );
         if( -1 == fh->write_single( fh, &c, 1 ))
@@ -23,7 +24,8 @@ int main( int argc, char** argv ) {
             PVO_DIE( "close failed." );
     }
 
-    fh = pvo_low_io_file_handle_create( PVO_LOW_IO_MPI );
+    if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_MPI, &fh ))
+        PVO_DIE( "create failed." );
     if( -1 == fh->open( fh, "t1.dat", PVO_COMM_WORLD ))
         PVO_DIE( "open failed." );
     if( -1 == fh->write_single( fh, &c, 1 ))
@@ -33,7 +35,8 @@ int main( int argc, char** argv ) {
     if( -1 == fh->close( fh ))
         PVO_DIE( "close failed." );
 
-    fh = pvo_low_io_file_handle_create( PVO_LOW_IO_POSIX );
+    if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_POSIX, &fh ))
+        PVO_DIE( "create failed." );
     if( -1 == fh->open( fh, "t2.dat", PVO_COMM_WORLD ))
         PVO_DIE( "open failed." );
     if( -1 == fh->write_single( fh, &c, 1 ))

@@ -16,19 +16,28 @@ int main( int argc, char** argv ) {
     MPI_Init( &argc, &argv );
     pvo_init( MPI_COMM_WORLD );
 
-    pvo_create_island( pvo_world_rank()%2, &island );
+    if( -1 == pvo_create_island( pvo_world_rank()%2, &island ))
+        PVO_DIE( "pvo_create_island() failed." );
 
     snprintf( filename, sizeof(filename), "test%d.xml", island.no );
 
-    f  = pvo_low_io_file_handle_create( PVO_LOW_IO_MPI );
-    fh = pvo_xml_file_create( filename, &island, f );
+    if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_MPI, &f ))
+        PVO_DIE( "pvo_low_io_file_handle_create() failed." );
 
-    pvo_xml_file_new_group    ( fh, "A%03d", 5 );
-    pvo_xml_file_write_ordered( fh, &c, 1, MPI_CHAR );
-    pvo_xml_file_end_group    ( fh, "A%03d", 5 );
+    if( -1 == pvo_xml_file_create( filename, &island, f, &fh ))
+        PVO_DIE( "pvo_xml_file_create() failed." );
 
-    pvo_xml_file_delete( fh );
-    pvo_low_io_file_handle_delete( f );
+    if( -1 == pvo_xml_file_new_group    ( fh, "A%03d", 5 ))
+        PVO_DIE( "pvo_xml_file_new_group() failed." );
+    if( -1 == pvo_xml_file_write_ordered( fh, &c, 1, MPI_CHAR ))
+        PVO_DIE( "pvo_xml_file_write_ordered() failed." );
+    if( -1 == pvo_xml_file_end_group    ( fh, "A%03d", 5 ))
+        PVO_DIE( "pvo_xml_file_end_group() failed." );
+
+    if( -1 == pvo_xml_file_delete( fh ))
+        PVO_DIE( "pvo_xml_file_delete() failed." );
+    if( -1 == pvo_low_io_file_handle_delete( f ))
+        PVO_DIE( "pvo_low_io_file_handle_delete() failed." );
 
     pvo_quit();
     MPI_Finalize();

@@ -101,7 +101,10 @@ typedef struct pvo_low_io_file_handle
 /// of pvo_low_io_file_handle_t, it does not actually open a file.
 /// This can be done using the open() function.
 /// @param[in]  layer   the transport layer
-pvo_low_io_file_handle_t pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer );
+/// @param[out] fh      the file handle
+/// @returns    0 if everything wents fine. -1 otherwise
+int pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer,
+                                   pvo_low_io_file_handle_t* fh );
 
 /// Destroy a file handle. The operation assumes that the file has
 /// been closed previously using the close() function

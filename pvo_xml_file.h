@@ -51,9 +51,12 @@ typedef struct pvo_xml_file {
 /// @param[in]  name    the filename
 /// @param[in]  island  the attached island.
 /// @param[in]  f       the lower level I/O handle
-pvo_xml_file_t pvo_xml_file_create( const char*                name,
-                                    const pvo_island_t*        island,
-                                    pvo_low_io_file_handle_t   f );
+/// @param[out] fh      the file handle
+/// @returns    0 if everything wents fine. -1 otherwise
+int pvo_xml_file_create( const char*                name,
+                         const pvo_island_t*        island,
+                         pvo_low_io_file_handle_t   f,
+                         pvo_xml_file_t*            fh );
 
 /// Delete the XML file handle. Note that this does <b>not</b>
 /// delete the file; create and delete are simply the standard
@@ -94,6 +97,14 @@ int pvo_xml_file_write_element( pvo_xml_file_t fh, const char* fmt, ... );
 /// @returns    0 if everything wents fine. -1 otherwise
 int pvo_xml_file_write_ordered( pvo_xml_file_t fh, void* buf, int count, 
                                 MPI_Datatype datatype );
+
+/// Get the lower level file handle. This function can be used e.g.,
+/// to retrieve the handle for manual destruction.
+/// @param[in]  fh          the file handle
+/// @param[out] f           the lower layer file handle
+/// @returns    0 if everything wents fine. -1 otherwise
+int pvo_xml_file_low_io_file_handle( pvo_xml_file_t fh,
+                                     pvo_low_io_file_handle_t* f );
 
 #ifdef __cplusplus
 }

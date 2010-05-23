@@ -13,6 +13,6 @@ ENDMACRO()
 PVO_ADD_TEST( pvo_low_io.c )
 PVO_ADD_TEST( pvo_island.c )
 PVO_ADD_TEST( pvo_xml_file.c )
-# PVO_ADD_TEST( pvo_cookie.c )
-# PVO_ADD_TEST( pvo_file.c )
+PVO_ADD_TEST( pvo_cookie.c )
+PVO_ADD_TEST( pvo_file.c )
 
