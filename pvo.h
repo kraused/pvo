@@ -8,6 +8,8 @@
 /// This is the public interface to the
 /// Parallel VTU Output library (libpvo).
 
+#include "pvo_config.h"
+
 #include "pvo_MPI.h"
 #include "pvo_decls.h"
 #include "pvo_types.h"

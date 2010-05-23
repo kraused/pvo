@@ -4,6 +4,9 @@
 PROJECT( pvo NONE )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 
+# Include path
+SET( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
+
 # ------------------------------------------------------------------------------
 # Enable MPI
 # ------------------------------------------------------------------------------
@@ -13,6 +16,8 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 
 ENABLE_LANGUAGE( C )
 ENABLE_LANGUAGE( CXX )
+
+INCLUDE( PvoConfig )
 
 # Soure files
 SET ( SRC "" )

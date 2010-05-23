@@ -1,0 +1,21 @@
+
+/// vim: tabstop=4:expandtab:hlsearch
+
+#ifndef PVO_CONFIG_H_INCLUDED
+#define PVO_CONFIG_H_INCLUDED 1
+
+/// Check for MPI
+#cmakedefine HAVE_MPI_H
+
+/// Check for unistd.h
+#cmakedefine HAVE_UNISTD_H
+
+/// Check for endianess
+#cmakedefine HAVE_SYSTEM_LE
+#cmakedefine HAVE_SYSTEM_BE 
+
+/// The default low level I/O layer to use
+#define PVO_DEFAULT_LOW_IO_LAYER ${PVO_DEFAULT_LOW_IO_LAYER}
+
+#endif
+

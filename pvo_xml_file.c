@@ -141,6 +141,7 @@ int pvo_xml_file_low_io_file_handle( pvo_xml_file_t fh,
                                      pvo_low_io_file_handle_t* f )
 {
     *f = fh->f;
+    return 0;
 }
 
 

@@ -1,6 +1,8 @@
 
 /// vim: tabstop=4:expandtab:hlsearch
 
+#include "pvo_config.h"
+
 #include "pvo_file.h"
 #include "pvo_memory.h"
 #include "pvo_report.h"
@@ -19,7 +21,7 @@ int pvo_file_open( const char*           filename,
     if( sizeof(buf) <= snprintf( buf, sizeof(buf),
                                  "%s-%d.vtu",
                                  filename, cki->island.no )) {
-        PVO_WARN( "Filename including extension exceeds limit." );
+        PVO_ERROR( "Filename including extension exceeds limit." );
         goto fn_fail;
     }
 
@@ -28,7 +30,7 @@ int pvo_file_open( const char*           filename,
     (*fh)->cki = cki;
     strncpy( (*fh)->name, filename, sizeof((*fh)->name) );
 
-    if( -1 == pvo_low_io_file_handle_create( -1, &f ))
+    if( -1 == pvo_low_io_file_handle_create( PVO_DEFAULT_LOW_IO_LAYER, &f ))
         goto fn_fail;
     if( -1 == pvo_xml_file_create( buf, &cki->island, f, &(*fh)->f ))
         goto fn_fail;
@@ -40,31 +42,21 @@ fn_fail:
     goto fn_exit;
 }
 
-//void write_pvtu() {
-//    
-//}
-//
-//
-//void write_vtu () {
-//
- //   /// FIXME Get byte order from arch
-//    pvo_xml_new_group( ?, "VTKFile type=\"UnstructuredGrid\" "
-//                          "version=\"0.1\" "
-//                          "byte_order=\"LittleEndian\"" );
-//    pvo_xml_new_group( ?, "UnstructuredGrid" );
-//    pvo_xml_new_group( ?, "Piece NumberOfPoints=\"%d\" NumberOfCells=\"%d\"" );
-//
-//    pvo_xml_new_group( ?, "AppendedData encoding=\"raw\"" );
-//    /// ?
-//    pvo_xml_end_group( ?, "AppendedData" );
-//    pvo_xml_end_group( ?, "VTKFile" );
-//}
-
-
 int pvo_file_write( pvo_file_t fh ) {
-//    write_pvtu( fh );
-//    write_vtu ( fh );
-    return 0;
+    int err = 0;
+
+    if( NULL == fh->write ) {
+        PVO_ERROR( "Invalid file: NULL == fh->write." );
+        goto fn_fail;
+    }
+
+    err = fh->write( fh );
+
+fn_exit:
+    return err;
+fn_fail:
+    err = -1;
+    goto fn_exit;
 }
 
 int pvo_file_close( pvo_file_t fh ) {

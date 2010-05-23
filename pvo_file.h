@@ -59,6 +59,9 @@ struct pvo_file {
     /// used by the (exchangeable) lower level
     /// driver.
     pvo_xml_file_t              f;
+
+    /// Write file
+    int (*write)( struct pvo_file* self );
     
 };
 
