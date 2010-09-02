@@ -63,35 +63,6 @@ static int pvo_vtu_write_meta( pvo_file_t self, pvo_xml_file_t f )
     return err;
 }
 
-/// Convert from the number of corners to the VTK type
-static int pvo_vtu_cell_type( int ncorners, uint8_t* type )
-{
-    int err = 0;
-
-    switch( ncorners )
-    {
-    case 3:
-        *type = 5;
-        break;
-    case 8:
-        *type = 12;
-        break;
-    case 4:
-        *type = 9 | 10; /* FIXME The mapping is not unique! We need additional
-                                 information about the element. Probably we can
-                                 check if the points are coplanar? */
-    default:
-        PVO_ERROR( "Don't know how to handle ncorners = %d.", ncorners );
-        goto fn_fail;
-    }
-
-fn_exit:
-    return err;
-fn_fail:
-    err = 1;
-    goto fn_exit;
-}
-
 /// Write a vtu file
 static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
 {
@@ -104,7 +75,6 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
     int nbytes;
     MPI_Datatype type;
     size_t i;
-    uint8_t* t;
 
     if( NULL == f->island ) {
         PVO_ERROR( "Invalid input: NULL == fh->base.cki." );
@@ -256,17 +226,8 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
     nbytes = pvo_var_type_sizeof[PVO_VAR_UINT8]*gncells;
     pvo_xml_file_write_single ( f, &nbytes, 1, MPI_INT );
 
-    /* In order to be able to call pvo_xml_file_write_ordered() we need to have
-     * the full array in memory ...
-     */
-    t = malloc(fh->ncells*sizeof(uint8_t));
-    for( i = 0; i < fh->ncells; ++i )
-        pvo_vtu_cell_type( fh->cia[i+1]-fh->cia[i], &t[i] );
-
     pvo_var_type_mpi( PVO_VAR_UINT8, &type );
-    pvo_xml_file_write_ordered( f, t, fh->ncells, type );
-
-    free( t );
+    pvo_xml_file_write_ordered( f, fh->types, fh->ncells, type );
 
     pvo_xml_file_end_group( f, "AppendedData" );
     pvo_xml_file_end_group( f, "VTKFile" );
@@ -286,6 +247,7 @@ int pvo_vtu_file_open( const char*      filename,
                        int64_t          ncells,
                        int32_t*         cia,
                        int32_t*         cja,
+                       uint8_t*         types,
                        pvo_vtu_file_t*  fh )
 {
     int err = 0;
@@ -307,6 +269,7 @@ int pvo_vtu_file_open( const char*      filename,
     (*fh)->pts    = pts;
     (*fh)->cia    = cia;
     (*fh)->cja    = cja;
+    (*fh)->types  = types;
 
     snprintf( (*fh)->base.suffix, sizeof((*fh)->base.suffix), "vtu" );
 

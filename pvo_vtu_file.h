@@ -13,6 +13,36 @@
 extern "C" {
 #endif
 
+/// List of supported cell types. We do not support
+/// all the VTK cell types (even though we easily
+/// could do if this is required).
+///
+/// It would be nice to get around this being necessary
+/// but unfortunately the mapping from the number of
+/// corners to the type itself is not one-to-one and
+/// hence we need this additional information
+///
+typedef enum
+{
+    /// A single isolated vertex
+    PVO_VTU_VERTEX        = 1,
+    /// A line
+    PVO_VTU_LINE          = 3,
+    /// A triangle
+    PVO_VTU_TRIANGLE      = 5,
+    /// A quadrilateral
+    PVO_VTU_QUADRILATERAL = 9,
+    /// A tetrahedron
+    PVO_VTU_TETRAHEDRON   = 10,
+    /// A hexahedron
+    PVO_VTU_HEXAHEDRON    = 12,
+    /// A wedge
+    PVO_VTU_WEDGE         = 13,
+    /// A pyramid
+    PVO_VTU_PYRAMID       = 14
+
+} pvo_vtu_cell_type_t;
+
 /// pvo_vtu_file: Derives from pvo_file
 /// This file type can be used to write unstructured meshes
 /// into the vtu file format.
@@ -52,6 +82,9 @@ struct pvo_vtu_file {
     /// keep storage requirements low
     int32_t*        cja;
 
+    /// Cell types
+    uint8_t*        types;
+
 };
 
 /// Allow for opaque handling of the pvo_vtu_file type
@@ -75,6 +108,11 @@ typedef struct pvo_vtu_file*    pvo_vtu_file_t;
 /// @param[in]  ncells      The number of cells
 /// @param[in]  cia         Row pointer for connectivity graph
 /// @param[in]  cja         Column indices for connectivity graph
+/// @param[in]  types       The cell types. Ideally this would be
+///                         an array of type pvo_vtu_cell_type_t ,
+///                         but by requiring it to be of type uint8_t
+///                         we can get around an additional memory
+///                         copy.
 /// @param[out] fh          the file handle
 /// @returns    0 if everything wents fine. -1 otherwise
 int pvo_vtu_file_open( const char*      filename,
@@ -84,6 +122,7 @@ int pvo_vtu_file_open( const char*      filename,
                        int64_t          ncells,
                        int32_t*         cia,
                        int32_t*         cja,
+                       uint8_t*         types,
                        pvo_vtu_file_t*  fh );
 
 /// Close a file opened with pvo_file_vtu_open()
