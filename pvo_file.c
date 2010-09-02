@@ -147,10 +147,14 @@ int pvo_file_write( pvo_file_t fh ) {
         goto fn_fail;
     }
 
-    if( 1 < fh->cki->island.nislands )
+// Write the meta data file also if we have only one island. This
+// will ensure that the data is named correctly and we can load
+// time datain Paraview.
+//
+//    if( 1 < fh->cki->island.nislands )
         err = pvo_file_write_meta( fh );
-    else
-        err = 0;    
+//    else
+//        err = 0;    
 
     if( -1 == err )
         PVO_ERROR( "Writing parallel vtk file failed." );

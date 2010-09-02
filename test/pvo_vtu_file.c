@@ -65,7 +65,7 @@ int main( int argc, char** argv ) {
     if( -1 == pvo_cookie_create( pvo_world_rank()%2, &cookie ))
         PVO_DIE( "pvo_cookie_create() failed." );
 
-    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_NODEDATA, PVO_VAR_INT32  , 8, "X", X ))
+    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_NODEDATA, PVO_VAR_INT32  , 1, "X", X ))
         PVO_DIE( "pvo_cookie_insert_var() failed." );
     if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_CELLDATA, PVO_VAR_FLOAT32, 1, "Y", Y ))
         PVO_DIE( "pvo_cookie_insert_var() failed." );

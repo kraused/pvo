@@ -62,7 +62,7 @@ struct pvo_vtu_file {
     struct pvo_file base;
 
     /// Number of nodes on the processor. This
-    /// includes shared nodes
+    /// includes shared nodes.
     int64_t         nnodes;
 
     /// Number of cells on the processor

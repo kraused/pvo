@@ -16,11 +16,22 @@ extern "C" {
 /// pvo_vtp_file: Derives from pvo_file
 /// This file type can be used to write polydata
 /// into the vtp file format.
-/// 
-struct pvo_vtp_file {
+///
+/// FIXME Currently the file only supports the output
+///       of point data. More functionality can be added
+///       if necessary.
+///
+struct pvo_vtp_file
+{
 
     /// Base 
     struct pvo_file base;
+
+    /// Number of points
+    int64_t npoints;    
+
+    /// Point coordinates
+    pvo_float3_t* pts;
 
 };
 
@@ -35,10 +46,14 @@ typedef struct pvo_vtp_file*    pvo_vtp_file_t;
 ///                         the same on all processes.
 /// @param[in]  cki         A persistent cookie can be used to pass
 ///                         information between different files.
+/// @param[in]  npoints     Number of points
+/// @param[in]  pts         Point coordinates
 /// @param[out] fh          the file handle
 /// @returns    0 if everything wents fine. -1 otherwise
 int pvo_vtp_file_open( const char*      filename,
                        pvo_cookie_t     cki,
+                       int64_t          npoints,
+                       pvo_float3_t*    pts,                       
                        pvo_vtp_file_t*  fh );
 
 /// Close a file opened with pvo_file_vtp_open()
