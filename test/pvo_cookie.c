@@ -8,6 +8,7 @@
 
 int main( int argc, char** argv ) {
     pvo_cookie_t cookie;
+    void* p = NULL;
 
     MPI_Init( &argc, &argv );
     pvo_init( MPI_COMM_WORLD );
@@ -15,14 +16,14 @@ int main( int argc, char** argv ) {
     if( -1 == pvo_cookie_create( pvo_world_rank()%2, &cookie ))
         PVO_DIE( "pvo_cookie_create() failed." );
 
-    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_NODEDATA, PVO_VAR_INT32, 8, "X" ))
+    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_NODEDATA, PVO_VAR_INT32, 8, "X", p ))
         PVO_DIE( "pvo_cookie_insert_var() failed." );
 
     if( 1 != pvo_cookie_number_var( cookie ))
         PVO_DIE( " pvo_cookie_number_var = %d.", 
                    pvo_cookie_number_var( cookie ));
 
-    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_CELLDATA, PVO_VAR_FLOAT32, 1, "Y" ))
+    if( -1 == pvo_cookie_insert_var( cookie, PVO_VAR_CELLDATA, PVO_VAR_FLOAT32, 1, "Y", p ))
         PVO_DIE( "pvo_cookie_insert_var() failed." );
 
     if( 2 != pvo_cookie_number_var( cookie ))

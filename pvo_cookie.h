@@ -60,12 +60,14 @@ int pvo_cookie_delete( pvo_cookie_t cookie );
 /// @param[in]      ncomps  the number of components
 /// @param[in]      name    the name of the variable. The name should
 ///                         be unique
+/// @param[in]      ptr     pointer to variable memory
 /// @returns    0 if everything wents fine. -1 otherwise
 int pvo_cookie_insert_var( pvo_cookie_t    cookie,
                            pvo_var_group_t grp,
                            pvo_var_type_t  type,
                            int             ncomps,
-                           const char*     name );
+                           const char*     name,
+                           const void*     ptr );
 
 /// Remove a variable from the variable list using the
 /// name

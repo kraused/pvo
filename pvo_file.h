@@ -39,6 +39,9 @@ struct pvo_file {
     /// The byte order used
     pvo_file_byte_order_t       bo;    
 
+    /// VTK conforming string representation of the byte order
+    char                        bo_str[32];
+
     /// The user provided cookie. The idea of the
     /// cookies is to seperate data which might be valid for
     /// different pvo_file instances (e.g., thinking about writing
@@ -54,14 +57,16 @@ struct pvo_file {
     /// Common prefix for all vtu and the pvtu file
     char                        name[128];
 
-    /// The file handle.
-    /// This is an opaque handle for the file
-    /// used by the (exchangeable) lower level
-    /// driver.
-    pvo_xml_file_t              f;
+    ///  File suffix. This must be set by derived classes
+    char                        suffix[8];
 
-    /// Write file
-    int (*write)( struct pvo_file* self );
+    /// Write a pvtx file. This function is implemented by
+    /// derived structs as they depend on the format to use
+    /// (e.g., unstructured meshes, poly data, ... )
+    int (*write_meta)( struct pvo_file* self, pvo_xml_file_t f );
+
+    /// Write the vtx file. 
+    int (*write_data)( struct pvo_file* self, pvo_xml_file_t f );
     
 };
 
@@ -71,7 +76,11 @@ struct pvo_file {
 /// members of the pvo_file structure
 typedef struct pvo_file*    pvo_file_t;
 
-///
+/// Open a file. Please note the differences in the handling of
+/// the fh parameter: Since this class is used as the base class
+/// for all pvo_XXX_file types we typically need to initialize
+/// an instance of pvo_file which is already allocated (as part
+/// of the instance of the derived type).
 /// @param[in]  filename    name of the file to open without
 ///                         extension. The filename should be
 ///                         the same on all processes.
@@ -79,23 +88,25 @@ typedef struct pvo_file*    pvo_file_t;
 ///                         this will be little endian (x86).
 /// @param[in]  cki         A persistent cookie cna be used to pass
 ///                         information between different files.
-/// @param[out] fh          the file handle
+/// @param[inout]   fh      The file handle. Note that this is
+///                         passed by value and hence assumed to
+///                         be allready allocated.
 /// @returns    0 if everything wents fine. -1 otherwise
-int pvo_file_open( const char*           filename,
-                   pvo_file_byte_order_t bo,
-                   pvo_cookie_t          cki,
-                   pvo_file_t*           fh );
+int pvo_file_create( const char*           filename,
+                     pvo_file_byte_order_t bo,
+                     pvo_cookie_t          cki,
+                     pvo_file_t            fh );
 
-/// Write to a file
+/// Write to a file.
 /// @param[in]  fh  the file handle
 /// @returns    0 if everything wents fine. -1 otherwise
 int pvo_file_write( pvo_file_t fh );
 
 /// Close a file opened with pvo_file_open()
-/// @param[in]  fh  the file handle
+/// @param[in]  fh  The file handle. The storage is <b>not</b>
+///                 freed.
 /// @returns    0 if everything wents fine. -1 otherwise
-int pvo_file_close( pvo_file_t fh );
-
+int pvo_file_delete( pvo_file_t fh );
 
 #ifdef __cplusplus
 }

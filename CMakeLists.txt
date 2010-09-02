@@ -38,8 +38,12 @@ LIST( APPEND SRC
       pvo_cookie.c
       pvo_file.c )
 
+# vtu files
+LIST( APPEND SRC
+      pvo_vtu_file.c )
+
 # Temporary
-ADD_DEFINITIONS( -DPVO_USE_MPI_IO=1 -O0 -ggdb )
+ADD_DEFINITIONS( -DPVO_USE_MPI_IO=1 -O0 -ggdb -Wall )
 
 ADD_LIBRARY( pvo ${SRC} )
 

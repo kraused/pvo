@@ -18,6 +18,7 @@
 #include "pvo_xml_file.h"
 #include "pvo_cookie.h"
 #include "pvo_file.h"
+#include "pvo_vtu_file.h"
 
 #ifdef __cplusplus
 extern "C" {

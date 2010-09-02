@@ -37,7 +37,7 @@ int pvo_low_io_single_close( pvo_low_io_file_handle_t self )
 
 /// A thin wrapper around fwrite which performs checks and
 /// makes sure we return the correct values
-int pvo_low_io_single_write( FILE* fh, void* buf, int count )
+static int pvo_low_io_single_write( FILE* fh, void* buf, size_t count )
 {
     if( NULL == fh ) {
         PVO_WARN( "Attempt to write to a file which is not open." );

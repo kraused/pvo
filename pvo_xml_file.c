@@ -17,6 +17,7 @@ int pvo_xml_file_create( const char*                name,
 {
     static const char string[] = "<?xml version=\"1.0\"?>\n";
     int err = 0;
+    MPI_Comm comm;
 
     *fh = pvo_malloc( sizeof(struct pvo_xml_file) );
 
@@ -27,7 +28,12 @@ int pvo_xml_file_create( const char*                name,
     (*fh)->ilvl     = 0;
     (*fh)->itabs[0] = 0x0;
 
-    if( -1 == (*fh)->f->open( (*fh)->f, name, island->comm ))
+    if( NULL == island ) /// Make sure we do not dereference island
+        comm = MPI_COMM_NULL;
+    else
+        comm = island->comm;
+
+    if( -1 == (*fh)->f->open( (*fh)->f, name, comm ))
         goto fn_fail;
     if( -1 == (*fh)->f->write_single( (*fh)->f, (void* )string, strlen( string )))
         goto fn_fail;
@@ -112,7 +118,7 @@ int pvo_xml_file_end_group( pvo_xml_file_t fh, const char* fmt, ... ) {
     fh->itabs[fh->ilvl] = 0x0;
 
     va_start( vl, fmt );
-    buf = print( fh, (const char* [2]){ "<", "/>" }, fmt, vl );
+    buf = print( fh, (const char* [2]){ "</", ">" }, fmt, vl );
     va_end  ( vl );
 
     return fh->f->write_single( fh->f, (void* )buf, strlen( buf ));
@@ -131,10 +137,19 @@ int pvo_xml_file_write_element( pvo_xml_file_t fh, const char* fmt, ... ) {
 
 int pvo_xml_file_write_ordered( pvo_xml_file_t fh, void* buf, int count, 
                                 MPI_Datatype datatype ) {
-    int  size;
+    int size;
     MPI_Type_size( datatype, &size );
 
     return fh->f->write_ordered( fh->f, buf, count*size );
+}
+
+int pvo_xml_file_write_single( pvo_xml_file_t fh, void* buf, int count,
+                               MPI_Datatype datatype )
+{
+    int size;
+    MPI_Type_size( datatype, &size );
+
+    return fh->f->write_single( fh->f, buf, count*size );
 }
 
 int pvo_xml_file_low_io_file_handle( pvo_xml_file_t fh,

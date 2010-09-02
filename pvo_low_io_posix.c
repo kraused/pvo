@@ -10,6 +10,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 #if 1   /// FIXME Mac Os X
 #define O_LARGEFILE 0
@@ -43,6 +44,8 @@ int pvo_low_io_posix_open( pvo_low_io_file_handle_t self,
     h->fptr = 0;
     h->fd   = open( name, O_CREAT | O_WRONLY | O_FSYNC,
                           S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH );
+    /// Do not use O_TRUNC to open the file as this messes up 
+    /// parallel writes to the file.
 
     if( -1 == h->fd ) {
         PVO_WARN( "Opening file \"%s\" failed (%s).", name, strerror(errno) );
@@ -73,10 +76,8 @@ int pvo_low_io_posix_close( pvo_low_io_file_handle_t self )
 
 
 /// Write count bytes at position pos to the file fd.
-int pvo_low_io_posix_write( int fd, long pos, void* buf, int count )
+static int pvo_low_io_posix_write( int fd, long pos, void* buf, int count )
 {
-    int nbytes;
-
     if( (off_t )-1 == lseek( fd, pos, SEEK_SET ))
         return -1;
 

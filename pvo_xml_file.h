@@ -98,6 +98,16 @@ int pvo_xml_file_write_element( pvo_xml_file_t fh, const char* fmt, ... );
 int pvo_xml_file_write_ordered( pvo_xml_file_t fh, void* buf, int count, 
                                 MPI_Datatype datatype );
 
+/// Write data on a single process. All processes must pass in the
+/// same values
+/// @param[in]  fh          the file handle
+/// @param[in]  buf         buffer space to write
+/// @param[in]  count       number of items to write
+/// @param[in]  datatype    the type of the data to write
+/// @returns    0 if everything wents fine. -1 otherwise
+int pvo_xml_file_write_single( pvo_xml_file_t fh, void* buf, int count,
+                               MPI_Datatype datatype );
+
 /// Get the lower level file handle. This function can be used e.g.,
 /// to retrieve the handle for manual destruction.
 /// @param[in]  fh          the file handle

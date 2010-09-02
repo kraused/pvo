@@ -7,6 +7,7 @@
 /// @file pvo_types.h
 /// Basic datatypes used in the library
 
+#include <stdlib.h>
 #include <stdint.h>
 
 #ifdef __cplusplus

@@ -6,6 +6,7 @@
 #include "pvo_memory.h"
 
 #include <iso646.h>
+#include <string.h>
 
 int pvo_cookie_create( int color, pvo_cookie_t* cookie ) {
     int err = 0;
@@ -35,12 +36,12 @@ fn_fail:
 }
 
 int pvo_cookie_insert_var( pvo_cookie_t    cookie,
-                            pvo_var_group_t grp,
-                            pvo_var_type_t  type,
-                            int             ncomps,
-                            const char*     name ) {
+                           pvo_var_group_t grp,
+                           pvo_var_type_t  type,
+                           int             ncomps,
+                           const char*     name,
+                           const void*     ptr ) {
     pvo_var_t* p;
-    pvo_var_t* q;
     int        err = 0;
 
     if( NULL == cookie ) {
@@ -49,7 +50,7 @@ int pvo_cookie_insert_var( pvo_cookie_t    cookie,
     }
 
     if( NULL == cookie->vlist )
-        err = pvo_create_var( grp, type, ncomps, name,
+        err = pvo_var_create( grp, type, ncomps, name, ptr,
                              ( cookie->vlist = pvo_malloc( sizeof(pvo_var_t) )) );
     else {
         // Go to the end of the list
@@ -61,7 +62,7 @@ int pvo_cookie_insert_var( pvo_cookie_t    cookie,
             PVO_WARN( "Expected p->next == NULL. "
                       "This might produce a memory leak." );
 
-        err = pvo_create_var( grp, type, ncomps, name, 
+        err = pvo_var_create( grp, type, ncomps, name, ptr,
                               ( p->next = pvo_malloc( sizeof(pvo_var_t) )) );
     }
 
@@ -87,7 +88,7 @@ int pvo_cookie_remove_var( pvo_cookie_t    cookie,
         else
             cookie->vlist = p->next;
 
-        pvo_delete_var( p );
+        pvo_var_delete( p );
         pvo_free( p );
 
         goto fn_exit;   // Assume names are unique
