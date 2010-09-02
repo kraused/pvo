@@ -16,4 +16,5 @@ PVO_ADD_TEST( pvo_xml_file.c )
 PVO_ADD_TEST( pvo_cookie.c )
 PVO_ADD_TEST( pvo_file.c )
 PVO_ADD_TEST( pvo_vtu_file.c )
+PVO_ADD_TEST( pvo_vtp_file.c )
 

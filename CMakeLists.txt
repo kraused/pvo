@@ -42,6 +42,10 @@ LIST( APPEND SRC
 LIST( APPEND SRC
       pvo_vtu_file.c )
 
+# vtp files
+LIST( APPEND SRC
+      pvo_vtp_file.c )
+
 # Temporary
 ADD_DEFINITIONS( -DPVO_USE_MPI_IO=1 -O0 -ggdb -Wall )
 
