@@ -2,7 +2,7 @@
 /// vim: tabstop=4:expandtab:hlsearch:
 
 #include "pvo_report.h"
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 
 #include <stdio.h>
 #include <stdlib.h>

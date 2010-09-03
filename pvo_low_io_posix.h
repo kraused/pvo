@@ -8,7 +8,7 @@
 /// Low level I/O functionality based on
 /// POSIX I/O
 
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 #include "pvo_low_io.h"
 
 #ifdef __cplusplus

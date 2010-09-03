@@ -9,7 +9,7 @@
 /// for variables
 
 #include "pvo_types.h"
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -12,7 +12,7 @@
 /// Each file has an associated unique shared
 /// file pointer. All functions are collective.
 
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 
 #ifdef __cplusplus
 extern "C" {

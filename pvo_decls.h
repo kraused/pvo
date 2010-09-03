@@ -7,7 +7,7 @@
 /// @file pvo_decls.h
 /// Collection of function declarations
 
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 
 #ifdef __cplusplus
 extern "C" {

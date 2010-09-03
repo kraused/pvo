@@ -10,7 +10,7 @@
 
 #include "pvo_low_io.h"
 #include "pvo_island.h"
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 
 #ifdef __cplusplus
 extern "C" {

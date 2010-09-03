@@ -8,7 +8,7 @@
 /// Low level I/O functionality for non-concurrent
 /// file output.
 
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 #include "pvo_low_io.h"
 
 #ifdef __cplusplus
