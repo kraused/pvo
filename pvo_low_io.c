@@ -6,7 +6,7 @@
 #include "pvo_report.h"
 
 #include "pvo_low_io_single.h"
-#include "pvo_low_io_MPI.h"
+#include "pvo_low_io_mpi.h"
 #include "pvo_low_io_posix.h"
 
 int pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer,
@@ -26,12 +26,14 @@ int pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer,
         (*fh)->write_single  = pvo_low_io_single_write_single;
         (*fh)->write_ordered = pvo_low_io_single_write_ordered;
         break;
+#ifdef HAVE_MPI
     case PVO_LOW_IO_MPI:
         (*fh)->open          = pvo_low_io_MPI_open;
         (*fh)->close         = pvo_low_io_MPI_close;
         (*fh)->write_single  = pvo_low_io_MPI_write_single;
         (*fh)->write_ordered = pvo_low_io_MPI_write_ordered;
         break;
+#endif
     case PVO_LOW_IO_POSIX:
         (*fh)->open          = pvo_low_io_posix_open;
         (*fh)->close         = pvo_low_io_posix_close;

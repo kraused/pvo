@@ -7,7 +7,11 @@
 /// @file pvo_MPI.h
 /// PVO interface to MPI, the message passing standard
 
+#ifdef HAVE_MPI_H
 #include <mpi.h>
+#else
+#include "pvo_mpi_stubs.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {

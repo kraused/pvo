@@ -10,7 +10,7 @@
 
 #include "pvo_config.h"
 
-#include "pvo_MPI.h"
+#include "pvo_mpi.h"
 #include "pvo_decls.h"
 #include "pvo_types.h"
 #include "pvo_island.h"

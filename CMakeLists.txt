@@ -27,16 +27,19 @@ LIST( APPEND SRC
       pvo_init.c
       pvo_quit.c
       pvo_physical_node_uid.c
-      pvo_MPI.c
+      pvo_mpi.c
       pvo_low_io.c
       pvo_low_io_single.c
-      pvo_low_io_MPI.c
       pvo_low_io_posix.c
       pvo_island.c
       pvo_xml_file.c
       pvo_var.c
       pvo_cookie.c
       pvo_file.c )
+
+# MPI
+# LIST( APPEND SRC
+#       pvo_low_io_mpi.c )
 
 # vtu files
 LIST( APPEND SRC

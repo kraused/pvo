@@ -21,7 +21,7 @@ int main( int argc, char** argv ) {
 
     snprintf( filename, sizeof(filename), "test%d.xml", island.no );
 
-    if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_MPI, &f ))
+    if( -1 == pvo_low_io_file_handle_create( PVO_DEFAULT_LOW_IO_LAYER, &f ))
         PVO_DIE( "pvo_low_io_file_handle_create() failed." );
 
     if( -1 == pvo_xml_file_create( filename, &island, f, &fh ))
