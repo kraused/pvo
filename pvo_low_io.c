@@ -1,6 +1,7 @@
 
 /// vim: tabstop=4:expandtab:hlsearch
 
+#include "pvo_config.h"
 #include "pvo_low_io.h"
 #include "pvo_memory.h"
 #include "pvo_report.h"
@@ -28,10 +29,10 @@ int pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer,
         break;
 #ifdef HAVE_MPI
     case PVO_LOW_IO_MPI:
-        (*fh)->open          = pvo_low_io_MPI_open;
-        (*fh)->close         = pvo_low_io_MPI_close;
-        (*fh)->write_single  = pvo_low_io_MPI_write_single;
-        (*fh)->write_ordered = pvo_low_io_MPI_write_ordered;
+        (*fh)->open          = pvo_low_io_mpi_open;
+        (*fh)->close         = pvo_low_io_mpi_close;
+        (*fh)->write_single  = pvo_low_io_mpi_write_single;
+        (*fh)->write_ordered = pvo_low_io_mpi_write_ordered;
         break;
 #endif
     case PVO_LOW_IO_POSIX:

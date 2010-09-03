@@ -7,6 +7,8 @@
 /// @file pvo_MPI.h
 /// PVO interface to MPI, the message passing standard
 
+#include "pvo_config.h"
+
 #ifdef HAVE_MPI_H
 #include <mpi.h>
 #else

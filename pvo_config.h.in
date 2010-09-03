@@ -5,8 +5,8 @@
 #define PVO_CONFIG_H_INCLUDED 1
 
 /// Check for MPI
-/* #cmakedefine HAVE_MPI   */
-/* #cmakedefine HAVE_MPI_H */
+#cmakedefine HAVE_MPI
+#cmakedefine HAVE_MPI_H
 
 /// Check for unistd.h
 #cmakedefine HAVE_UNISTD_H

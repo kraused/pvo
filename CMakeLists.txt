@@ -7,17 +7,21 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 # Include path
 SET( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
-# ------------------------------------------------------------------------------
-# Enable MPI
-# ------------------------------------------------------------------------------
-# On my local system I don't need to use the wrapper explicitly
-# SET( CMAKE_C_COMPILERR  "mpicc"  )
-# SET( CMAKE_CXX_COMPILER "mpic++" )
+# Check for MPI. We need to cal this before we enable the
+# languages because these files might set CMAKE_C_COMPILER
+# and CMAKE_CXX_COMPILER to enforce usage of compiler
+# wrappers
+INCLUDE(PvoMPI)
 
+# Now we can enable the languages. This must be done here because
+# PvoConfig.cmake checks for headers
 ENABLE_LANGUAGE( C )
 ENABLE_LANGUAGE( CXX )
 
 INCLUDE( PvoConfig )
+
+# To be able to find pvo_config.h ...
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR} )
 
 # Soure files
 SET ( SRC "" )
@@ -38,8 +42,10 @@ LIST( APPEND SRC
       pvo_file.c )
 
 # MPI
-# LIST( APPEND SRC
-#       pvo_low_io_mpi.c )
+IF( TPL_ENABLE_MPI )
+	LIST( APPEND SRC
+	      pvo_low_io_mpi.c )
+ENDIF()
 
 # vtu files
 LIST( APPEND SRC
@@ -49,16 +55,39 @@ LIST( APPEND SRC
 LIST( APPEND SRC
       pvo_vtp_file.c )
 
-# Temporary
-ADD_DEFINITIONS( -DPVO_USE_MPI_IO=1 -O0 -ggdb -Wall )
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR} )
-
 ADD_LIBRARY( pvo ${SRC} )
-
 
 # Testing
 ENABLE_TESTING   ()
-ADD_CUSTOM_TARGET( check COMMAND ${CMAKE_CTEST_COMMAND} )
- 
 ADD_SUBDIRECTORY ( test )
+
+# Installation
+SET( LIB_INSTALL_DIR		${CMAKE_INSTALL_PREFIX}/lib )
+SET( INCLUDE_INSTALL_DIR	${CMAKE_INSTALL_PREFIX}/include )
+SET( BIN_INSTALL_DIR		${CMAKE_INSTALL_PREFIX}/bin )
+
+INSTALL( TARGETS	pvo
+	 DESTINATION	lib )
+
+INSTALL( FILES
+         ${CMAKE_CURRENT_BINARY_DIR}/pvo_config.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_cookie.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_decls.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_file.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_island.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_low_io.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_low_io_mpi.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_low_io_posix.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_low_io_single.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_memory.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_mpi.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_mpi_stubs.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_report.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_types.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_var.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtp_file.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtu_file.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_xml_file.h 
+         DESTINATION include )
 
