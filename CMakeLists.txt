@@ -21,7 +21,7 @@ ENABLE_LANGUAGE( CXX )
 INCLUDE( PvoConfig )
 
 # To be able to find pvo_config.h ...
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR} )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 # Soure files
 SET ( SRC "" )
@@ -58,8 +58,11 @@ LIST( APPEND SRC
 ADD_LIBRARY( pvo ${SRC} )
 
 # Testing
-ENABLE_TESTING   ()
-ADD_SUBDIRECTORY ( test )
+ENABLE_TESTING  ()
+ADD_SUBDIRECTORY( test )
+
+# Examples and benchmarks
+ADD_SUBDIRECTORY( examples )
 
 # Installation
 SET( LIB_INSTALL_DIR		${CMAKE_INSTALL_PREFIX}/lib )
