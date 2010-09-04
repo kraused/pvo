@@ -1,8 +1,8 @@
 
 /// vim: tabstop=4:expandtab:hlsearch
 
-#include "../pvo.h"
-#include "../pvo_report.h"
+#include "pvo.h"
+#include "pvo_report.h"
 
 #include <iso646.h>
 
