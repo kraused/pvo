@@ -152,6 +152,21 @@ static inline int MPI_Comm_split( MPI_Comm comm, int color, int key, MPI_Comm* c
     return 0;
 }
 
+/// Time measurement 
+static inline double MPI_Wtime()
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    return tv.tv_sec + 1e-6*tv.tv_usec;
+}
+
+/// No-op
+static inline int MPI_Barrier( MPI_Comm comm )
+{
+    return 0;
+}
+
 #ifdef __cplusplus
 }
 #endif
