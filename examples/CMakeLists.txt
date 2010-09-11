@@ -10,4 +10,5 @@ MACRO( PVO_ADD_BENCH FILE )
 ENDMACRO()
 
 PVO_ADD_BENCH( rand.c )
+PVO_ADD_BENCH( chunk.c )
 

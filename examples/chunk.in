@@ -1,0 +1,7 @@
+1.0		# min value of r
+5.0		# max value of r
+0.95		# gamma value 
+80		# number of points for u
+80		# number of points for v
+400		# number of points for r
+1		# number of islands

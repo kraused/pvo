@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <pvo.h>
+#include "parse.h"
+
 
 #ifdef HAVE_MPI
 void compute_offset(double* o)
@@ -44,32 +46,7 @@ void create_random_points( long N, pvo_float3_t* P, double* U )
     }
 }
 
-int parse_cmdline_int()
-{
-    int myrank, v;
-
-    MPI_Comm_rank( MPI_COMM_WORLD, &myrank );
-    if( 0 == myrank )
-    {
-        char buf[1024];
-        int  i, k;
-
-        fgets( buf, sizeof(buf), stdin );
-
-        k = strlen(buf);
-        for( i = 0; i < k; ++i )
-            if( '#' == buf[i] )
-                buf[i] = '\0';
-
-        v = atoi(buf);
-    }
-
-    MPI_Bcast( &v, 1, MPI_INT, 0, MPI_COMM_WORLD );
-    return v;
-}
-
 // String representation of the low-level I/O layer choice
-//
 const char* str_low_io_layer[3] = 
 {
     [PVO_LOW_IO_SINGLE] = "PVO_LOW_IO_SINGLE",
