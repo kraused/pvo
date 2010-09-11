@@ -1,0 +1,97 @@
+ 
+    *** Parallel VTK Output (PVO) Library ***
+
+
+Table of contents
+=================
+
+ o Introduction
+ o Requirements
+ o Installation
+ o Known Problems
+ o Future Directions
+
+
+Introduction
+============
+
+The Parallel VTK Output (PVO) library provides
+high-level functionality for parallel output in
+the VTK XML formats.
+
+
+Requirements
+============
+
+To install PVO, you need a C99 compatible C compiler
+and cmake installed. You can download cmake from
+http://cmake.org. In order to use the parallel I/O
+functionality in PVO, you need to have a MPI-2 compliant
+MPI distribution available. The code was mainly tested
+with Open MPI (see http://www.open-mpi.org)
+
+
+Installation
+============
+
+This guide assumes that you start out in the pvo directory
+and that the bin directory of cmake is in your $PATH.
+To install PVO, you should create a new directory for
+building
+
+% mkdir build
+% cd build
+
+If you have an MPI implementation available and the "mpicc"
+compiler wrapper are in your $PATH, you can simply use
+
+% cmake -DCMAKE_INSTALL_PREFIX=<PREFIX> ..
+
+where <PREFIX> is the directory where you want to install
+the headers and library file.
+To build and install PVO you can type
+
+% make
+% make install
+
+By default, the PVO library will use MPI-I/O for the parallel
+I/O. This can make trouble on NFS mounted devices. As an alternative,
+the code implements a small low-level layer using POSIX I/O.
+To enable it, you need to use the option
+
+-DPVO_DEFAULT_LOW_IO_LAYER=PVO_LOW_IO_POSIX
+
+when calling cmake.
+
+If no MPI is available on your system, you can still use PVO
+to do serial I/O. In this case you should add the option
+
+-DTPL_ENABLE_MPI:BOOL=OFF
+
+to the cmake command.
+
+By default, PVO is compiled in a static library (unfortunately, right
+now not as position-independent code). To compile a shared library,
+you should add the option
+
+- DBUILD_SHARED_LIBS:BOOL=ON
+
+to the cmake flags.
+
+
+Known Problems
+==============
+
+No known bugs so far.
+
+
+Future Directions
+=================
+
+PVO is a small library and many new features could be
+implemented:
+
+ - Fortran Interface
+ - C++ Interface using Classes
+ - Support for other VTK formats (like structured grids, ...)
+
