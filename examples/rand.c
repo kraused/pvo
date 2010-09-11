@@ -6,7 +6,7 @@
 #include <string.h>
 #include <pvo.h>
 
-#ifdef HVAE_MPI
+#ifdef HAVE_MPI
 void compute_offset(double* o)
 {
     int cartdim[] = { 0, 0, 0 };
@@ -43,8 +43,6 @@ void create_random_points( long N, pvo_float3_t* P, double* U )
         U[3*i+2] = (1.0*rand())/(1.0*RAND_MAX);
     }
 }
-
-#define MAX(X,Y)    ((X) >= (Y) ? (X) : (Y))
 
 int parse_cmdline_int()
 {
