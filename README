@@ -74,7 +74,7 @@ By default, PVO is compiled in a static library (unfortunately, right
 now not as position-independent code). To compile a shared library,
 you should add the option
 
-- DBUILD_SHARED_LIBS:BOOL=ON
+-DBUILD_SHARED_LIBS:BOOL=ON
 
 to the cmake flags.
 
