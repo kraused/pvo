@@ -23,7 +23,7 @@ INCLUDE( PvoConfig )
 # To be able to find pvo_config.h ...
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
-# Soure files
+# Source files
 SET ( SRC "" )
 LIST( APPEND SRC
       pvo_report.c
