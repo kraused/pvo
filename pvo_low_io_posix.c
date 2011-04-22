@@ -103,7 +103,7 @@ int pvo_low_io_posix_close( pvo_low_io_file_handle_t self )
 
 
 /// Write count bytes at position pos to the file fd.
-static int pvo_low_io_posix_write( int fd, long pos, void* buf, int count )
+static int pvo_low_io_posix_write( int fd, long pos, void* buf, size_t count )
 {
     if( (off_t )-1 == lseek( fd, pos, SEEK_SET ))
         return -1;
@@ -116,8 +116,8 @@ static int pvo_low_io_posix_write( int fd, long pos, void* buf, int count )
 
 
 int pvo_low_io_posix_write_single( pvo_low_io_file_handle_t self,
-                                    void* buf,
-                                    int   count )
+                                    void*  buf,
+                                    size_t count )
 {
     pvo_low_io_posix_internal_file_handle_t* h = self->handle;
     int myrank, err, t[2];
@@ -141,24 +141,27 @@ int pvo_low_io_posix_write_single( pvo_low_io_file_handle_t self,
 
 
 int pvo_low_io_posix_write_ordered( pvo_low_io_file_handle_t self,
-                                     void* buf,
-                                     int   count )
+                                     void*  buf,
+                                     size_t count )
 {
     pvo_low_io_posix_internal_file_handle_t* h = self->handle;
-    int  myrank, err, offset, t[2];
+    int    myrank, err;
+    size_t offset, t[2];
 
     MPI_Comm_rank( h->comm, &myrank );
 
     /// Compute the offset of the process
-    MPI_Exscan( &count, &offset, 1, MPI_INT, MPI_SUM, h->comm );
+    MPI_Exscan( &count, &offset, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, h->comm );
     if( 0 == myrank )
         offset = 0;
 
     err = pvo_low_io_posix_write( h->fd, h->fptr+offset, buf, count );    
 
+    /// Sum up err as a size_t value to allow doing the allreduce in
+    /// one call to MPI
     t[0] = err;
     t[1] = count;
-    MPI_Allreduce( MPI_IN_PLACE, t, 2, MPI_INT, MPI_SUM, h->comm );
+    MPI_Allreduce( MPI_IN_PLACE, t, 2, MPI_UNSIGNED_LONG_LONG, MPI_SUM, h->comm );
     err   = t[0];
     count = t[1];
 

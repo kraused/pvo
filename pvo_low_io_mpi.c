@@ -86,8 +86,8 @@ int pvo_low_io_mpi_close( pvo_low_io_file_handle_t self )
 
 
 int pvo_low_io_mpi_write_single( pvo_low_io_file_handle_t self,
-                                 void* buf,
-                                 int   count )
+                                 void*  buf,
+                                 size_t count )
 {
     pvo_low_io_mpi_internal_file_handle_t* h = self->handle;
     int myrank, err;
@@ -109,8 +109,8 @@ int pvo_low_io_mpi_write_single( pvo_low_io_file_handle_t self,
 
 
 int pvo_low_io_mpi_write_ordered( pvo_low_io_file_handle_t self,
-                                  void* buf,
-                                  int   count )
+                                  void*  buf,
+                                  size_t count )
 {
     pvo_low_io_mpi_internal_file_handle_t* h = self->handle;
 

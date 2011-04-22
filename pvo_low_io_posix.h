@@ -55,14 +55,14 @@ int pvo_low_io_posix_close( pvo_low_io_file_handle_t self );
 /// Write from a single process. See the documentation in pvo_low_io.h
 /// for more information.
 int pvo_low_io_posix_write_single( pvo_low_io_file_handle_t self,
-                                   void* buf,
-                                   int   count );
+                                   void*  buf,
+                                   size_t count );
 
 /// Write ordered. See the documentation in pvo_low_io.h
 /// for more information.
 int pvo_low_io_posix_write_ordered( pvo_low_io_file_handle_t self,
-                                    void* buf,
-                                    int   count );
+                                    void*  buf,
+                                    size_t count );
 
 #ifdef __cplusplus
 }

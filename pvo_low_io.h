@@ -39,6 +39,9 @@
 /// Each file has an associated unique shared
 /// file pointer. All functions are collective.
 
+/// Needed for size_t
+#include <stdlib.h>
+
 #include "pvo_mpi.h"
 
 #ifdef __cplusplus
@@ -108,8 +111,8 @@ typedef struct pvo_low_io_file_handle
     /// @param[in]  count   number of elements in buffer
     /// @returns    0 if everything wents fine. -1 otherwise
     int (*write_single)( struct pvo_low_io_file_handle* self,
-                         void* buf,
-                         int   count );
+                         void*  buf,
+                         size_t count );
 
     /// Write data with order implied by the rank of the processes
     /// in the communicator.
@@ -118,8 +121,8 @@ typedef struct pvo_low_io_file_handle
     /// @param[in]  count   number of elements in buffer
     /// @returns    0 if everything wents fine. -1 otherwise
     int (*write_ordered)( struct pvo_low_io_file_handle* self,
-                          void* buf,
-                          int   count );
+                          void*  buf,
+                          size_t count );
 
 } * pvo_low_io_file_handle_t;
 

@@ -79,8 +79,8 @@ static int pvo_low_io_single_write( FILE* fh, void* buf, size_t count )
 
 
 int pvo_low_io_single_write_single( pvo_low_io_file_handle_t self,
-                                    void* buf,
-                                    int   count )
+                                    void*  buf,
+                                    size_t count )
 {
     if( NULL == self ) {
         PVO_WARN( "Invalid input: NULL == self." );
@@ -92,8 +92,8 @@ int pvo_low_io_single_write_single( pvo_low_io_file_handle_t self,
 
 
 int pvo_low_io_single_write_ordered( pvo_low_io_file_handle_t self,
-                                     void* buf,
-                                     int   count )
+                                     void*  buf,
+                                     size_t count )
 {
     if( NULL == self ) {
         PVO_WARN( "Invalid input: NULL == self." );
