@@ -36,7 +36,7 @@
 
 #include "pvo_config.h"
 
-#ifdef HAVE_MPI_H
+#ifdef PVO_HAVE_MPI_H
 #include <mpi.h>
 #else
 #include "pvo_mpi_stubs.h"

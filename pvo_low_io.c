@@ -54,7 +54,7 @@ int pvo_low_io_file_handle_create( pvo_low_transport_layer_t layer,
         (*fh)->write_single  = pvo_low_io_single_write_single;
         (*fh)->write_ordered = pvo_low_io_single_write_ordered;
         break;
-#ifdef HAVE_MPI
+#ifdef PVO_HAVE_MPI
     case PVO_LOW_IO_MPI:
         (*fh)->open          = pvo_low_io_mpi_open;
         (*fh)->close         = pvo_low_io_mpi_close;

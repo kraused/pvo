@@ -35,7 +35,7 @@
 #include "parse.h"
 
 
-#ifdef HAVE_MPI
+#ifdef PVO_HAVE_MPI
 void compute_offset(double* o)
 {
     int cartdim[] = { 0, 0, 0 };
@@ -52,7 +52,7 @@ void create_random_points( long N, pvo_float3_t* P, double* U )
     long i;
     double o[3];
 
-#ifdef HAVE_MPI
+#ifdef PVO_HAVE_MPI
     compute_offset(o);
 #else
     o[0] = 0.0;
