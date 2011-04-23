@@ -1,0 +1,8 @@
+
+! vi: tabstop=4:expandtab
+
+&input
+    N  = 1048576    ! number of points
+    ni = 1          ! number of islands
+/
+
