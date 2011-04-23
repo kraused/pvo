@@ -10,3 +10,8 @@ ELSE()
 	RETURN()
 ENDIF()
 
+SET( CMAKE_Fortran_MODULE_DIRECTORY
+     ${PROJECT_BINARY_DIR}/fmods CACHE PATH "Single directory for all fortran modules" )
+# This is needed to find the pvo module file
+INCLUDE_DIRECTORIES( ${CMAKE_Fortran_MODULE_DIRECTORY} )
+

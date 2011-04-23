@@ -13,8 +13,6 @@ MACRO( PVO_ADD_F_BENCH FILE )
     STRING( REGEX REPLACE "[.](F90|f)" "_f" TARGET "${FILE}" )
 
     ADD_EXECUTABLE       ( ${TARGET} ${FILE} )
-    # This is needed to find the pvo module file
-    INCLUDE_DIRECTORIES  ( ${CMAKE_BINARY_DIR}/fortran )
     TARGET_LINK_LIBRARIES( ${TARGET} pvof pvo )
 ENDMACRO()
 

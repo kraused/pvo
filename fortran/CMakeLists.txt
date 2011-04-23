@@ -13,3 +13,6 @@ LIST( APPEND SRC
 
 ADD_LIBRARY( pvof ${SRC} )
 
+INSTALL( TARGETS    pvof
+     DESTINATION    lib )
+

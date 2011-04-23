@@ -17,8 +17,6 @@ MACRO( PVO_ADD_F_TEST FILE )
     SET   ( TARGET "test_${TARGET}" )
 
     ADD_EXECUTABLE       ( ${TARGET} ${FILE} )
-    # This is needed to find the pvo module file
-    INCLUDE_DIRECTORIES  ( ${CMAKE_BINARY_DIR}/fortran )
     TARGET_LINK_LIBRARIES( ${TARGET} pvof pvo )
     ADD_TEST             ( ${TARGET} ${EXECUTABLE_OUTPUT_PATH}/${TARGET} )
 

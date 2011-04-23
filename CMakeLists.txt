@@ -89,6 +89,7 @@ INSTALL( TARGETS	pvo
 INSTALL( FILES
          ${CMAKE_CURRENT_BINARY_DIR}/pvo_config.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvof.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_cookie.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_decls.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_file.h
@@ -107,4 +108,6 @@ INSTALL( FILES
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtu_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_xml_file.h 
          DESTINATION include )
+
+INSTALL( CODE "EXECUTE_PROCESS( COMMAND \"${CMAKE_COMMAND}\" -E copy_directory \"${CMAKE_Fortran_MODULE_DIRECTORY}/\${BUILD_TYPE}\" \"${CMAKE_INSTALL_PREFIX}/lib\" )")
 
