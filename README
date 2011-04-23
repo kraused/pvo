@@ -78,6 +78,13 @@ you should add the option
 
 to the cmake flags.
 
+Fortran support is by default enabled. To disable it you should add the
+option
+
+-DPVO_ENABLE_FORTRAN:BOOL=OFF
+
+to the cmake flags.
+
 
 Known Problems
 ==============
@@ -91,7 +98,6 @@ Future Directions
 PVO is a small library and many new features could be
 implemented:
 
- - Fortran Interface
  - C++ Interface using Classes
  - Support for other VTK formats (like structured grids, ...)
 
