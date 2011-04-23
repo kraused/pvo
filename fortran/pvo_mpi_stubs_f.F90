@@ -13,7 +13,7 @@ module mpi
     common /pvo_mpi_f_in_place/ MPI_IN_PLACE
 
     interface
-        real*8 function mpi_wtime
+        real*8 function mpi_wtime()
         end function
     end interface
 

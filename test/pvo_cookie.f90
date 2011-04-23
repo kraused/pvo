@@ -18,14 +18,14 @@ program pvo_cookie_f
 
     call pvo_cookie_create( mod(pvo_world_rank(),2), cookie, ierr )
     if( 0 .ne. ierr ) then
-        write(*,*), 'pvo_cookie_create failed'
+        write(*,*)  'pvo_cookie_create failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 
 
     call pvo_cookie_insert_var_int32( cookie, PVO_VAR_NODEDATA, 8, "I32"//char(0), p_i32, ierr )
     if( 0 .ne. ierr ) then
-        write(*,*), 'pvo_cookie_insert_var_int32 failed'
+        write(*,*)  'pvo_cookie_insert_var_int32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 
@@ -42,7 +42,7 @@ program pvo_cookie_f
 
     call pvo_cookie_insert_var_int64( cookie, PVO_VAR_CELLDATA, 8, "I64"//char(0), p_i64, ierr )
     if( 0 .ne. ierr ) then
-        write(*,*), 'pvo_cookie_insert_var_int64 failed'
+        write(*,*)  'pvo_cookie_insert_var_int64 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 
@@ -59,7 +59,7 @@ program pvo_cookie_f
 
     call pvo_cookie_insert_var_float32( cookie, PVO_VAR_NODEDATA, 8, "F32"//char(0), p_f32, ierr )
     if( 0 .ne. ierr ) then
-        write(*,*), 'pvo_cookie_insert_var_float32 failed'
+        write(*,*)  'pvo_cookie_insert_var_float32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 
@@ -76,7 +76,7 @@ program pvo_cookie_f
 
     call pvo_cookie_insert_var_float64( cookie, PVO_VAR_CELLDATA, 8, "F64"//char(0), p_f64, ierr )
     if( 0 .ne. ierr ) then
-        write(*,*), 'pvo_cookie_insert_var_float64 failed'
+        write(*,*)  'pvo_cookie_insert_var_float64 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 

@@ -39,10 +39,10 @@ module pvo
     use pvo_consts
 
     interface
-        integer function pvo_world_size
+        integer function pvo_world_size()
         end function
 
-        integer function pvo_world_rank
+        integer function pvo_world_rank()
         end function
 
         subroutine pvo_init( comm, ierr )

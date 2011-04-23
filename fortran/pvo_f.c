@@ -178,7 +178,7 @@ void PVO_FNAME(pvo_vtp_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
 /* --------------------------------------------------------------------------------
    MPI stubs
    -------------------------------------------------------------------------------- */
-#ifndef PVO_HAVE_MPI
+#if 0 == PVO_HAVE_MPI
 #define PVO_F_MPI_IN_PLACE  PVO_FNAME(pvo_mpi_f_in_place,PVO_MPI_F_IN_PLACE)
 int PVO_F_MPI_IN_PLACE;
 

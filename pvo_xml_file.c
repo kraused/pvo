@@ -98,10 +98,10 @@ fn_fail:
 
 /// Return the content to write for the routines pvo_xml_new_group(),
 /// pvo_xml_end_group() and pvo_xml_file_write_element()
-inline char* print( pvo_xml_file_t fh, 
-                    const char*     delimiter[2],
-                    const char*     fmt, 
-                    va_list         vl ) {
+char* print( pvo_xml_file_t fh, 
+             const char*     delimiter[2],
+             const char*     fmt, 
+             va_list         vl ) {
            char str[256];
     static char buf[256];
 

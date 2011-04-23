@@ -158,6 +158,8 @@ contains
     subroutine create_chunk( n_u, n_v, n_r, r_min, r_max, gamma, &
                              nnodes, pts, ncells, cia, cja, types, &
                              U, V )
+        implicit none
+
         integer, intent(in) :: n_u, n_v, n_r
         real*8, intent(in) :: r_min, r_max, gamma
         integer*8, intent(in) :: nnodes, ncells
@@ -169,6 +171,9 @@ contains
         integer, dimension(ncells), intent(out) :: types
         integer*8 :: i, iu, iv, ir, k
         real*8 :: dr, z, theta, phi, r, t, uu, vv
+        integer, dimension(:), allocatable :: seed
+        integer :: n
+
 
         dr = (r_max - r_min)/n_r
 
@@ -215,16 +220,21 @@ contains
         
         types = PVO_VTU_HEXAHEDRON
 
-        call srand( 0 )
+        call random_seed( size = n )
+        allocate( seed(n) )
+        seed = 0
+        call random_seed( put = seed )
+
         do i = 1, nnodes
-            U(1,i) = rand()
-            U(2,i) = rand()
-            U(3,i) = rand()
+            call random_number( U(1,i) )
+            call random_number( U(2,i) )
+            call random_number( U(3,i) )
         end do
         do i = 1, ncells
-            V(i) = rand()
+            call random_number( V(i) )
         end do
 
+        deallocate( seed )
     end subroutine
 
 end program

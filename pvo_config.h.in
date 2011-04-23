@@ -2,37 +2,20 @@
 #ifndef PVO_CONFIG_H_INCLUDED
 #define PVO_CONFIG_H_INCLUDED 1
 
-#cmakedefine PVO_HAVE_MPI
-#cmakedefine PVO_HAVE_MPI_H
+#define PVO_HAVE_MPI                @PVO_HAVE_MPI@
+#define PVO_HAVE_MPI_H              @PVO_HAVE_MPI_H@
 
-#cmakedefine PVO_HAVE_UNISTD_H
+#define PVO_HAVE_UNISTD_H           @PVO_HAVE_UNISTD_H@
+#define PVO_HAVE_SYS_TIME_H         @PVO_HAVE_SYS_TIME_H@
 
-#cmakedefine PVO_HAVE_SYSTEM_LE
-#cmakedefine PVO_HAVE_SYSTEM_BE 
+#define PVO_HAVE_SYSTEM_LE          @PVO_HAVE_SYSTEM_LE@
+#define PVO_HAVE_SYSTEM_BE          @PVO_HAVE_SYSTEM_BE@
 
-#define PVO_DEFAULT_LOW_IO_LAYER ${PVO_DEFAULT_LOW_IO_LAYER}
+#define PVO_DEFAULT_LOW_IO_LAYER    @PVO_DEFAULT_LOW_IO_LAYER@
 
-#cmakedefine PVO_ENABLE_FORTRAN
+#define PVO_ENABLE_FORTRAN          @PVO_ENABLE_FORTRAN_VAL@
 
-#cmakedefine PVO_FORTRAN_LC
-#cmakedefine PVO_FORTRAN_UC
-
-#cmakedefine PVO_FORTRAN_UNDERSCORE
-
-#ifdef PVO_FORTRAN_LC
-#   ifdef PVO_FORTRAN_UNDERSCORE
-#       define PVO_FNAME(LC,UC) LC ## _
-#   else
-#       define PVO_FNAME(LC,UC) LC
-#   endif
-#endif
-#ifdef PVO_FORTRAN_UC
-#   ifdef PVO_FORTRAN_UNDERSCORE
-#       define PVO_FNAME(LC,UC) UC ## _
-#   else
-#       define PVO_FNAME(LC,UC) UC
-#   endif
-#endif
+#define PVO_FNAME(LC,UC)            @PVO_FNAME_MACRO@
 
 #endif
 

@@ -34,8 +34,14 @@
 /// @file pvo_mpi_stubs.h
 /// Stub versions of MPI routines
 
+#include "pvo_config.h"
+
 #include <string.h>
 #include <stdlib.h>
+
+#if 1 == PVO_HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
 
 #include "pvo_report.h"
 
@@ -193,10 +199,15 @@ static inline int MPI_Comm_split( MPI_Comm comm, int color, int key, MPI_Comm* c
 /// Time measurement 
 static inline double MPI_Wtime()
 {
+#if 1 == PVO_HAVE_SYS_TIME_H
     struct timeval tv;
     gettimeofday(&tv, NULL);
 
     return tv.tv_sec + 1e-6*tv.tv_usec;
+#else
+#   error Need gettimeofday
+    return 0.0;
+#endif
 }
 
 /// No-op
@@ -206,7 +217,7 @@ static inline int MPI_Barrier( MPI_Comm comm )
 }
 
 /// No-op
-static inline MPI_Comm_f2c( MPI_Fint comm )
+static inline MPI_Comm MPI_Comm_f2c( MPI_Fint comm )
 {
     return comm;
 }

@@ -106,44 +106,57 @@ program rand_f
 
 contains
 
-#ifdef PVO_HAVE_MPI
     subroutine compute_offset( o )
         integer, dimension(3), intent(out) :: o
         integer, dimension(3) :: cartdim
         integer :: ierr
-       
+
+#if 1 == PVO_HAVE_MPI       
         cartdim = (/ 0, 0, 0 /)
         call mpi_dims_create( pvo_world_size(), 3, cartdim, ierr )
  
         o(1) = mod(pvo_world_rank(),cartdim(1))
         o(2) = mod((pvo_world_rank()/cartdim(1)),cartdim(2))
         o(3) = pvo_world_rank()/(cartdim(1)*cartdim(2))
-    end subroutine
+#else
+        o = (/ 0, 0, 0 /)
 #endif
+    end subroutine
 
     subroutine create_random_points( N, P, U )
+        implicit none
+
         integer*8, intent(in) :: N
         integer*8 :: i
         real, dimension(3,N) :: P
         real*8, dimension(3,N) :: U
         integer, dimension(3) :: o
+        integer, dimension(:), allocatable :: seed
+        integer :: nn
+    
 
-#ifdef PVO_HAVE_MPI
         call compute_offset( o )
-#else
-        o = (/ 0, 0, 0 /) 
-#endif
 
-        call srand( 0 )
+        call random_seed( size = nn )
+        allocate( seed(nn) )
+        seed = 0
+        call random_seed( put = seed )
+
         do i = 1, N
-            P(1,i) = rand() + o(1)
-            P(2,i) = rand() + o(2)
-            P(3,i) = rand() + o(3)
+            call random_number( P(1,i) )
+            call random_number( P(2,i) )
+            call random_number( P(3,i) )
 
-            U(1,i) = rand()
-            U(2,i) = rand()
-            U(3,i) = rand()
+            P(1,i) = P(1,i) + o(1)
+            P(2,i) = P(2,i) + o(2)
+            P(3,i) = P(3,i) + o(3)
+
+            call random_number( U(1,i) )
+            call random_number( U(2,i) )
+            call random_number( U(3,i) )
         end do
+
+        deallocate( seed )
     end subroutine
 
 end program

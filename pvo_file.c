@@ -46,10 +46,10 @@ int pvo_file_create( const char*           filename,
 
     fh->bo  = bo;
     if( PVO_FILE_BYTE_ORDER_MACHINE == fh->bo ) {
-#ifdef PVO_HAVE_SYSTEM_LE
+#if 1 ==  PVO_HAVE_SYSTEM_LE
         fh->bo = PVO_FILE_BYTE_ORDER_LE;
 #endif
-#ifdef PVO_HAVE_SYSTEM_BE
+#if 1 == PVO_HAVE_SYSTEM_BE
         fh->bo = PVO_FILE_BYTE_ORDER_BE;
 #endif
     }

@@ -35,30 +35,26 @@
 #include "parse.h"
 
 
-#ifdef PVO_HAVE_MPI
 void compute_offset(double* o)
 {
+#if 1 == PVO_HAVE_MPI
     int cartdim[] = { 0, 0, 0 };
     MPI_Dims_create( pvo_world_size(), 3, cartdim );
 
     o[0] =  pvo_world_rank()%cartdim[0];
     o[1] = (pvo_world_rank()/cartdim[0]) % cartdim[1];
     o[2] =  pvo_world_rank()/(cartdim[0]*cartdim[1]);
-}
+#else
+    o[0] = o[1] = o[2] = 0.0;
 #endif
+}
 
 void create_random_points( long N, pvo_float3_t* P, double* U )
 {
     long i;
     double o[3];
 
-#ifdef PVO_HAVE_MPI
     compute_offset(o);
-#else
-    o[0] = 0.0;
-    o[1] = 0.0;
-    o[2] = 0.0;
-#endif
 
     srand( 0 );
     for(i = 0; i < N; ++i)

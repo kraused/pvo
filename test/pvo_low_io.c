@@ -51,7 +51,7 @@ int main( int argc, char** argv ) {
             PVO_DIE( "close failed." );
     }
 
-#ifdef PVO_HAVE_MPI
+#if 1 == PVO_HAVE_MPI
     if( -1 == pvo_low_io_file_handle_create( PVO_LOW_IO_MPI, &fh ))
         PVO_DIE( "create failed." );
     if( -1 == fh->open( fh, "t1.dat", PVO_COMM_WORLD ))
