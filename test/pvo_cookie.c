@@ -71,7 +71,8 @@ int main( int argc, char** argv ) {
         PVO_DIE( " pvo_cookie_number_var = %d.", 
                    pvo_cookie_number_var( cookie ));
 
-    pvo_cookie_delete( cookie );
+    if( -1 == pvo_cookie_delete( cookie ))
+        PVO_DIE( "pvo_cookie_delete() failed." );
 
     pvo_quit();
     MPI_Finalize();

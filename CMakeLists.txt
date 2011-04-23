@@ -1,11 +1,14 @@
 
-#vim: tabstop=4:expandtab:hlsearch
+# vi: tabstop=4:expandtab:hlsearch
 
 PROJECT( pvo NONE )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 
 # Include path
 SET( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
+
+# Check whether the user wants Fortran support.
+INCLUDE(PvoFortran)
 
 # Check for MPI. We need to cal this before we enable the
 # languages because these files might set CMAKE_C_COMPILER
@@ -17,6 +20,10 @@ INCLUDE(PvoMPI)
 # PvoConfig.cmake checks for headers
 ENABLE_LANGUAGE( C )
 ENABLE_LANGUAGE( CXX )
+
+IF( PVO_ENABLE_FORTRAN )
+    ENABLE_LANGUAGE( Fortran )
+ENDIF()
 
 INCLUDE( PvoConfig )
 
@@ -56,6 +63,11 @@ LIST( APPEND SRC
       pvo_vtp_file.c )
 
 ADD_LIBRARY( pvo ${SRC} )
+
+# Fortran interface
+IF( PVO_ENABLE_FORTRAN )
+    ADD_SUBDIRECTORY( fortran )
+ENDIF()
 
 # Testing
 ENABLE_TESTING  ()

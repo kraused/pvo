@@ -18,5 +18,30 @@
 /// The default low level I/O layer to use
 #define PVO_DEFAULT_LOW_IO_LAYER ${PVO_DEFAULT_LOW_IO_LAYER}
 
+/// Fortran support
+#cmakedefine PVO_ENABLE_FORTRAN
+
+/// Lower or uppercase names
+#cmakedefine PVO_FORTRAN_LC
+#cmakedefine PVO_FORTRAN_UC
+
+/// With or without trailing underscore
+#cmakedefine PVO_FORTRAN_UNDERSCORE
+
+#ifdef PVO_FORTRAN_LC
+#   ifdef PVO_FORTRAN_UNDERSCORE
+#       define PVO_FNAME(LC,UC) LC ## _
+#   else
+#       define PVO_FNAME(LC,UC) LC
+#   endif
+#endif
+#ifdef PVO_FORTRAN_UC
+#   ifdef PVO_FORTRAN_UNDERSCORE
+#       define PVO_FNAME(LC,UC) UC ## _
+#   else
+#       define PVO_FNAME(LC,UC) UC
+#   endif
+#endif
+
 #endif
 
