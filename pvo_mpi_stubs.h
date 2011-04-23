@@ -46,6 +46,9 @@ extern "C" {
 /// MPI Communicator type
 typedef int MPI_Comm;
 
+/// MPI Fortran integer type
+typedef int MPI_Fint;
+
 /// MPI Datatype
 typedef int MPI_Datatype;
 
@@ -53,12 +56,14 @@ typedef int MPI_Datatype;
 typedef int MPI_Op;
 
 /// The types
-#define MPI_INT         (0)
-#define MPI_LONG        (1)
-#define MPI_FLOAT       (2)
-#define MPI_DOUBLE      (3)
-#define MPI_BYTE        (4)
-#define MPI_CHAR        (5)
+#define MPI_INT                 (0)
+#define MPI_LONG                (1)
+#define MPI_FLOAT               (2)
+#define MPI_DOUBLE              (3)
+#define MPI_BYTE                (4)
+#define MPI_CHAR                (5)
+#define MPI_UNSIGNED_LONG_LONG  (6)
+#define MPI_INTEGER8            (20)
 
 /// The operations
 #define MPI_SUM         (0)
@@ -130,6 +135,12 @@ static inline int MPI_Type_size( MPI_Datatype datatype, int* size )
     case MPI_CHAR:
         *size = sizeof(char);
         break;
+    case MPI_UNSIGNED_LONG_LONG:
+        *size = sizeof(unsigned long long);
+        break;
+    case MPI_INTEGER8:
+        *size = 64;
+        break;
     default:
         PVO_ERROR( "Invalid datatype." );
     }
@@ -192,6 +203,12 @@ static inline double MPI_Wtime()
 static inline int MPI_Barrier( MPI_Comm comm )
 {
     return 0;
+}
+
+/// No-op
+static inline MPI_Comm_f2c( MPI_Fint comm )
+{
+    return comm;
 }
 
 #ifdef __cplusplus

@@ -79,7 +79,7 @@ program rand_f
 
     if( 0 .eq. pvo_world_rank() ) then
         write(*,*) 'time [sec]                 : ', t2-t1
-        write(*,*) 'bandwidth [MB/sec]         : ', (36.0*N*pvo_world_size())/(1048576*(t2-t1))
+        write(*,*) 'bandwidth [MB/sec]         : ', N !(36.0*N*pvo_world_size())/(1048576*(t2-t1))
     end if
 
     call pvo_vtp_file_close( fh, ierr )

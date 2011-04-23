@@ -1,31 +1,22 @@
 
-/// vim: tabstop=4:expandtab:hlsearch
-
 #ifndef PVO_CONFIG_H_INCLUDED
 #define PVO_CONFIG_H_INCLUDED 1
 
-/// Check for MPI
 #cmakedefine PVO_HAVE_MPI
 #cmakedefine PVO_HAVE_MPI_H
 
-/// Check for unistd.h
 #cmakedefine PVO_HAVE_UNISTD_H
 
-/// Check for endianess
 #cmakedefine PVO_HAVE_SYSTEM_LE
 #cmakedefine PVO_HAVE_SYSTEM_BE 
 
-/// The default low level I/O layer to use
 #define PVO_DEFAULT_LOW_IO_LAYER ${PVO_DEFAULT_LOW_IO_LAYER}
 
-/// Fortran support
 #cmakedefine PVO_ENABLE_FORTRAN
 
-/// Lower or uppercase names
 #cmakedefine PVO_FORTRAN_LC
 #cmakedefine PVO_FORTRAN_UC
 
-/// With or without trailing underscore
 #cmakedefine PVO_FORTRAN_UNDERSCORE
 
 #ifdef PVO_FORTRAN_LC

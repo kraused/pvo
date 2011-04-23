@@ -1,6 +1,8 @@
 
 ! vi: tabstop=4:expandtab
 
+#include "pvof.h"
+
 ! FIXME On the long run pvo_consts should be
 !       created by cmake
 module pvo_consts

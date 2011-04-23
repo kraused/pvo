@@ -153,7 +153,7 @@ void PVO_FNAME(pvo_vtu_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
 void PVO_FNAME(pvo_vtu_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
     uint8_t* ui8types;
 
-    ui8types = ((pvo_vtu_file_t )fh)->types;    /// Allocated in pvo_vtu_file_open
+    ui8types = (*(pvo_vtu_file_t* )fh)->types;  /// Allocated in pvo_vtu_file_open
     *ierr = pvo_vtu_file_close( *(pvo_vtu_file_t* )fh );
     pvo_free( ui8types );
 }
@@ -174,4 +174,36 @@ void PVO_FNAME(pvo_vtp_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
 void PVO_FNAME(pvo_vtp_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vtp_file_close( *(pvo_vtp_file_t* )fh );
 }
+
+/* --------------------------------------------------------------------------------
+   MPI stubs
+   -------------------------------------------------------------------------------- */
+#ifndef PVO_HAVE_MPI
+#define PVO_F_MPI_IN_PLACE  PVO_FNAME(pvo_mpi_f_in_place,PVO_MPI_F_IN_PLACE)
+int PVO_F_MPI_IN_PLACE;
+
+void PVO_FNAME(mpi_init,MPI_INIT)( int* ierr )
+{
+    *ierr = 0;
+}
+
+void PVO_FNAME(mpi_allreduce,MPI_ALLREDUCE)( void*         sendbuf, 
+                                             void*         recvbuf, 
+                                             int*          count,
+                                             MPI_Datatype* datatype,
+                                             MPI_Op*       op,
+                                             MPI_Comm*     comm,
+                                             int*          ierr ) {
+    if(&PVO_F_MPI_IN_PLACE == sendbuf) {
+        *ierr = MPI_Allreduce( MPI_IN_PLACE, recvbuf, *count, *datatype, *op, *comm );
+    } else {
+        *ierr = MPI_Allreduce( sendbuf, recvbuf, *count, *datatype, *op, *comm );
+    }
+}
+
+double PVO_FNAME(mpi_wtime,MPI_WTIME)() {
+    return MPI_Wtime();
+}
+
+#endif
 

@@ -102,6 +102,7 @@ program chunk_f
 
     N = (3*4 + 3*8)*nnodes + (4 + 8*4 + 1 + 4 + 4)*ncells
     call mpi_allreduce( MPI_IN_PLACE, N, 1, MPI_INTEGER8, MPI_SUM, MPI_COMM_WORLD, ierr )
+
     if( 0 .eq. pvo_world_rank() ) then
         write(*,*) 'time [sec]                 : ', t2-t1
         write(*,*) 'bandwidth [MB/sec]         : ', (1.0*N)/(1048576*(t2-t1))
