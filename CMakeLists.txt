@@ -37,6 +37,7 @@ SET ( SRC "" )
 LIST( APPEND SRC
       pvo_report.c
       pvo_memory.c
+      pvo_utils.c
       pvo_init.c
       pvo_quit.c
       pvo_physical_node_uid.c

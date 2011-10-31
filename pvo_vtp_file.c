@@ -33,6 +33,7 @@
 #include "pvo_vtp_file.h"
 #include "pvo_memory.h"
 #include "pvo_report.h"
+#include "pvo_utils.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -82,7 +83,7 @@ static int pvo_vtp_write_meta( pvo_file_t self, pvo_xml_file_t f )
 
     for( i = 0; i < self->cki->island.nislands; ++i )
         pvo_xml_file_write_element( f, "Piece Source=\"%s-%d.%s\"",
-                                       self->name, i, self->suffix );
+                                       pvo_basename(self->name), i, self->suffix );
 
     pvo_xml_file_end_group( f, "PPolyData" );
     pvo_xml_file_end_group( f, "VTKFile" );
