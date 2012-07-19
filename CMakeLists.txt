@@ -60,10 +60,12 @@ ENDIF()
 # vtu files
 LIST( APPEND SRC
       pvo_vtu_file.c )
-
 # vtp files
 LIST( APPEND SRC
       pvo_vtp_file.c )
+# vti files
+LIST( APPEND SRC
+      pvo_vti_file.c )
 
 ADD_LIBRARY( pvo ${SRC} )
 

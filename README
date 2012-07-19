@@ -96,7 +96,8 @@ to the cmake flags.
 Known Problems
 ==============
 
-No known bugs so far.
+ - pvo_vti_file supports only one file per process (i.e.,
+   islands containing a single process)
 
 
 Future Directions
