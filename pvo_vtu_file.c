@@ -113,7 +113,10 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
     ibuf[0] = fh->nnodes;
     ibuf[1] = fh->ncells;
     ibuf[2] = fh->cia[fh->ncells];
-    MPI_Allreduce( MPI_IN_PLACE, ibuf, 3, MPI_INT, MPI_SUM, f->island->comm );
+    if( MPI_Allreduce( MPI_IN_PLACE, ibuf, 3, MPI_INT, MPI_SUM, f->island->comm )) {
+        PVO_WARN( "MPI_Allreduce failed." );
+        goto fn_fail;
+    }
 
     gnnodes = ibuf[0];
     gncells = ibuf[1];
@@ -126,7 +129,10 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
     ibuf[0] = fh->nnodes;
     ibuf[1] = fh->cia[fh->ncells];
 
-    MPI_Exscan( ibuf, jbuf, 2, MPI_INT, MPI_SUM, f->island->comm );
+    if( MPI_Exscan( ibuf, jbuf, 2, MPI_INT, MPI_SUM, f->island->comm )) {
+        PVO_WARN( "MPI_Exscane failed." );
+        goto fn_fail;
+    }
 
     if( 0 == f->island->rank ) {
         jbuf[0] = 0;
