@@ -202,6 +202,28 @@ void PVO_FNAME(pvo_vtp_file_close,PVO_VTP_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vtp_file_close( *(pvo_vtp_file_t* )fh );
 }
 
+
+
+/* --------------------------------------------------------------------------------
+   Functions in pvo_vti_file.h
+   -------------------------------------------------------------------------------- */
+void PVO_FNAME(pvo_vti_file_open,PVO_VTI_FILE_OPEN)( const char*    filename,
+                                                     void*          cookie,
+                                                     const int*     whole_extent,                                                                                 
+                                                     int*           ghost_level,                                                                                  
+                                                     const float*   origin,
+                                                     const float*   spacing,
+                                                     const int*     local_extent,
+                                                     void*          fh,
+                                                     int*           ierr ) { 
+    *ierr = pvo_vti_file_open( filename, *(pvo_cookie_t* )cookie, whole_extent,
+                               *ghost_level, origin, spacing, local_extent, fh );
+}
+
+void PVO_FNAME(pvo_vti_file_close,PVO_VTI_FILE_CLOSE)( void* fh, int* ierr ) {
+    *ierr = pvo_vti_file_close( *(pvo_vti_file_t* )fh );
+}
+
 /* --------------------------------------------------------------------------------
    MPI stubs
    -------------------------------------------------------------------------------- */
