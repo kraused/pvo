@@ -1,0 +1,8 @@
+
+#ifndef PVO_CONFIGF_H_INCLUDED
+#define PVO_CONFIGF_H_INCLUDED 1
+
+#define PVO_INCLUDE_MPIF_H          @PVO_INCLUDE_MPIF_H@
+
+#endif
+

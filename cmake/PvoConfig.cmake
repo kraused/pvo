@@ -51,4 +51,6 @@ ENDIF()
 
 CONFIGURE_FILE( pvo_config.h.in
                 pvo_config.h )
+CONFIGURE_FILE( pvo_configf.h.in
+                pvo_configf.h )
 

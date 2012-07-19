@@ -27,10 +27,17 @@
 ! authors and should not be interpreted as representing official policies, either expressed
 ! or implied, of the University of Lugano.
 
+#include "pvo_configf.h"
+
 program pvo_vtp_file_f
-    use mpi
     use pvo
+#if 1 == PVO_INCLUDE_MPIF_H
     implicit none
+#include "mpif.h"
+#else
+    use mpi
+    implicit none
+#endif
 
     integer :: ierr, num
     integer*8 :: npoints

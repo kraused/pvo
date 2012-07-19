@@ -1,7 +1,9 @@
 
 # vi: tabstop=4:expandtab:hlsearch
 
-OPTION( PVO_ENABLE_FORTRAN "Enable Fortran Interface" ON )
+OPTION( PVO_ENABLE_FORTRAN  "Enable Fortran Interface" ON )
+
+SET( PVO_INCLUDE_MPIF_H "0" CACHE INTERNAL "Whether to include mpif.h instead of using the mpi module" )
 
 IF( "${PVO_ENABLE_FORTRAN}" STREQUAL "ON" )
 	MESSAGE( STATUS "Compiling with Fortran support." )
