@@ -177,7 +177,7 @@ void PVO_FNAME(pvo_vtu_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
                                *ncells, cia, cja, ui8types, fh );
 }
 
-void PVO_FNAME(pvo_vtu_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
+void PVO_FNAME(pvo_vtu_file_close,PVO_VTU_FILE_CLOSE)( void* fh, int* ierr ) {
     uint8_t* ui8types;
 
     ui8types = (*(pvo_vtu_file_t* )fh)->types;  /// Allocated in pvo_vtu_file_open
@@ -189,7 +189,7 @@ void PVO_FNAME(pvo_vtu_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
 /* --------------------------------------------------------------------------------
    Functions in pvo_vtp_file.h
    -------------------------------------------------------------------------------- */
-void PVO_FNAME(pvo_vtp_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
+void PVO_FNAME(pvo_vtp_file_open,PVO_VTP_FILE_OPEN)( const char*   filename,
                                                      void*         cookie,
                                                      long*         npoints,
                                                      pvo_float3_t* pts,
@@ -198,7 +198,7 @@ void PVO_FNAME(pvo_vtp_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
     *ierr = pvo_vtp_file_open( filename, *(pvo_cookie_t* )cookie, *npoints, pts, fh );
 }
 
-void PVO_FNAME(pvo_vtp_file_close,PVO_FILE_CLOSE)( void* fh, int* ierr ) {
+void PVO_FNAME(pvo_vtp_file_close,PVO_VTP_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vtp_file_close( *(pvo_vtp_file_t* )fh );
 }
 
