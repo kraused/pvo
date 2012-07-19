@@ -63,6 +63,13 @@ To enable it, you need to use the option
 
 when calling cmake.
 
+If the MPI installation does not support modules (i.e., if
+"use mpi" does not work in Fortran codes) add the option
+
+-DPVO_INCLUDE_MPIF_H=1
+
+to the cmake flags.
+
 If no MPI is available on your system, you can still use PVO
 to do serial I/O. In this case you should add the option
 
