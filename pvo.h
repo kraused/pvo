@@ -47,6 +47,7 @@
 #include "pvo_file.h"
 #include "pvo_vtu_file.h"
 #include "pvo_vtp_file.h"
+#include "pvo_vti_file.h"
 
 #ifdef __cplusplus
 extern "C" {
