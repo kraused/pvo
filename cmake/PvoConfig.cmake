@@ -36,15 +36,15 @@ ENDIF()
 # Fortran naming scheme
 IF( PVO_ENABLE_FORTRAN )
     SET( PVO_ENABLE_FORTRAN_VAL 1 )
-    # FIXME Fixed for now. This is fine for many environments so it's okay to start
-    #       with those but eventually we should move to running real test. However, we
-    #       need to make sure that we don't run into problems on system with cross-
-    #       compilers (Cray a bit, especially BlueGene)
-    SET( PVO_FORTRAN_LC         1 )
-    SET( PVO_FORTRAN_UNDERSCORE 1 )
 
-    EXECUTE_PROCESS(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/fname.sh ${CMAKE_Fortran_COMPILER}
-                    OUTPUT_VARIABLE PVO_FNAME_MACRO)
+    EXECUTE_PROCESS(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/fname.sh ${CMAKE_C_COMPILER} ${CMAKE_Fortran_COMPILER}
+                    OUTPUT_VARIABLE PVO_FNAME_MACRO
+                    RESULT_VARIABLE RETVAL)
+    IF( RETVAL )
+        MESSAGE( FATAL_ERROR "Failed to test for Fortran name mangling scheme (in cmake/fname.sh)\nOutput was: ${PVO_FNAME_MACRO}" )
+    ELSE()
+        MESSAGE( STATUS "Setting PVO_FNAME(LC,UC) to ${PVO_FNAME_MACRO}" )
+    ENDIF()
 ELSE()
     SET( PVO_ENABLE_FORTRAN_VAL 0 )
 ENDIF()
