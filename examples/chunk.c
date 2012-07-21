@@ -115,14 +115,13 @@ void create_chunk( int N_u, int N_v, int N_r,
 
     srand( 0 );
 
-    for(i = 0; i < nnodes; ++i)
-    {
+    for( i = 0; i < nnodes; ++i ) {
         U[3*i+0] = (1.0*rand())/(1.0*RAND_MAX);
         U[3*i+1] = (1.0*rand())/(1.0*RAND_MAX);
         U[3*i+2] = (1.0*rand())/(1.0*RAND_MAX);
     }
 
-    for(i = 0; i < ncells; ++i)
+    for( i = 0; i < ncells; ++i )
         V[i] = (1.0*rand())/(1.0*RAND_MAX);
 }
 
@@ -174,7 +173,7 @@ int main( int argc, char** argv )
     /* The data is decomposed by slicing in the radial
        direction
      */
-    decompose(&N_r, &r_min, &r_max);
+    decompose( &N_r, &r_min, &r_max );
 
     nnodes = (N_u+1)*(N_v+1)*(N_r+1);
     ncells =  N_u   * N_v   * N_r   ;
