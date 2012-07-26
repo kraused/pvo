@@ -109,6 +109,7 @@ INSTALL( FILES
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_var.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtp_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtu_file.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vti_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_xml_file.h 
          DESTINATION include )
 
