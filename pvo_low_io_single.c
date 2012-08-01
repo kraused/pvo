@@ -42,8 +42,6 @@ int pvo_low_io_single_open( pvo_low_io_file_handle_t self,
                             const char* name,   
                             MPI_Comm    comm )
 {
-    self->handle = fopen( name, "w" );
-
     if( NULL == ( self->handle = fopen( name, "w" ))) {
         PVO_WARN( "Opening file \"%s\" failed.", name );
         return -1;
@@ -57,7 +55,7 @@ int pvo_low_io_single_close( pvo_low_io_file_handle_t self )
 {
     if( EOF == fclose( (FILE* )self->handle ))
         return -1;
-    
+
     return 0;
 }
 
