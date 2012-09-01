@@ -43,7 +43,7 @@ void pvo_symbol( int *ierr )
 EOF
     $CompilerC -o conftest.c.o -c conftest.c
 
-    S=$(nm conftest.c.o | awk '$2 == "T"' | grep -i pvo_symbol | awk '{print $3}')
+    S=$(nm conftest.c.o | awk '$2 == "T" || $2 == "D"' | grep -i pvo_symbol | awk '{print $3}')
 
     rm conftest.c
     rm conftest.c.o
@@ -64,7 +64,7 @@ end subroutine
 EOF
     $CompilerF -o conftest.F90.o -c conftest.F90
 
-    S=$(nm conftest.F90.o | awk '$2 == "T"' | grep -i pvo_symbol | awk '{print $3}')
+    S=$(nm conftest.F90.o | awk '$2 == "T" || $2 == "D"' | grep -i pvo_symbol | awk '{print $3}')
 
     rm conftest.F90
     rm conftest.F90.o
