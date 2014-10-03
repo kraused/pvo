@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -47,9 +47,9 @@ extern "C" {
 typedef struct pvo_island {
 
 /// No need to store the "archipelago" communicator. We assume
-/// this is PVO_COMM_WORLD    
+/// this is PVO_COMM_WORLD
 
-    /// Each island should know how many other island 
+    /// Each island should know how many other island
     /// are in the archipelago. We store this directly
     /// in pvo_island since introducing a new structure
     /// just for this purpose seems like an overshoot.
@@ -80,11 +80,11 @@ typedef struct pvo_island {
 /// all the processes in an island participate in collective
 /// I/O operations
 
-/// Create a new island by splitting PVO_COMM_WORLD into 
+/// Create a new island by splitting PVO_COMM_WORLD into
 /// islands. All ranks providing the same value for color are
 /// placed on the same island. Note that passing a negative valuee
-/// as color (which might coincide with MPI_UNDEFINED by chance) 
-/// is invalid since we assume that each process is part of exactly one 
+/// as color (which might coincide with MPI_UNDEFINED by chance)
+/// is invalid since we assume that each process is part of exactly one
 /// island
 /// @param[in]      color   the color used to decide how the islands
 ///                         are ranked
@@ -99,11 +99,11 @@ int pvo_delete_island( pvo_island_t* );
 
 /// Helper routine for creating islands in such a way that processes
 /// on the same physical node are in the same group. The returned
-/// value identifies the physical node uniquely. 
+/// value identifies the physical node uniquely.
 /// Unfortunately it is hard to make restrictions on the size of
 /// the returned value. In general, 16 bit might not be sufficient
 /// for uniquely identifying the nodes (e.g., Jugene with 73,728 nodes
-/// as of April 16 2010). 
+/// as of April 16 2010).
 int pvo_physical_node_uid();
 
 #ifdef __cplusplus

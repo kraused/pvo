@@ -49,7 +49,7 @@ program pvo_vtu_file_f
     integer, dimension(9) :: X
     real, dimension(2) :: Y
     integer, dimension(2) :: types
-   
+
     call mpi_init( ierr )
     call pvo_init( MPI_COMM_WORLD, ierr )
 
@@ -57,7 +57,7 @@ program pvo_vtu_file_f
     cia = (/ 0, 8, 9 /)
     cja = (/ 0, 1, 2, 3, 4, 5, 6, 7, 8 /)
     X   = (/ 2, 2, 3, 0, -1, 2, 5, -7, 8 /)
-    
+
     pt(1,1) = 2*pvo_world_rank() + 0.5
     pt(2,1) = 2*pvo_world_rank() + 0.5
     pt(3,1) = 2*pvo_world_rank() + 0.5
@@ -110,7 +110,7 @@ program pvo_vtu_file_f
         write(*,*)  'pvo_cookie_insert_var_int32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     call pvo_cookie_insert_var_float32( cookie, PVO_VAR_CELLDATA, 1, "Y"//char(0), Y, ierr )
     if( 0 .ne. ierr ) then
         write(*,*)  'pvo_cookie_insert_var_float32 failed'
@@ -142,7 +142,7 @@ program pvo_vtu_file_f
         write(*,*) 'pvo_cookie_delete failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
 
     call pvo_quit( ierr )
     call mpi_finalize( ierr )

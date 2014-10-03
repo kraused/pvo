@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -40,12 +40,12 @@ void decompose( int* N_r, double* r_min, double* r_max )
 {
     // Mesh spacing in r direction
     double dr = (*r_max - *r_min)/(*N_r);
-    
+
     int N = (int )((double )(*N_r)/(double )pvo_world_size());
 
     if( pvo_world_size() == pvo_world_rank()+1 )
     {
-        /* Need to account for the possibility that N_r is not 
+        /* Need to account for the possibility that N_r is not
            divisible by the number of cores. This is a dump load
            balancing function but sufficies for meshes which are
            large enough */
@@ -57,9 +57,9 @@ void decompose( int* N_r, double* r_min, double* r_max )
     *r_max = *r_min + (*N_r)*dr;
 }
 
-void create_chunk( int N_u, int N_v, int N_r, 
+void create_chunk( int N_u, int N_v, int N_r,
                    double r_min, double r_max, double gamma,
-                   long nnodes, pvo_float3_t* pts, 
+                   long nnodes, pvo_float3_t* pts,
                    long ncells, int* cia, int* cja, uint8_t* types,
                    double* U, float* V )
 {
@@ -95,7 +95,7 @@ void create_chunk( int N_u, int N_v, int N_r,
             for( iu = 0; iu < N_u; ++iu )
             {
                 k = 8*(iu + N_u*iv + N_u*N_v*ir);
-                
+
 #undef  INDEX
 #define INDEX(iu,iv,ir) ( (iu) + (N_u+1)*(iv) + (N_u+1)*(N_v+1)*(ir) )
                 cja[k+0] = INDEX(iu  ,iv  ,ir  );
@@ -127,7 +127,7 @@ void create_chunk( int N_u, int N_v, int N_r,
 
 
 // String representation of the low-level I/O layer choice
-const char* str_low_io_layer[3] = 
+const char* str_low_io_layer[3] =
 {
     [PVO_LOW_IO_SINGLE] = "PVO_LOW_IO_SINGLE",
     [PVO_LOW_IO_MPI] = "PVO_LOW_IO_MPI",
@@ -203,7 +203,7 @@ int main( int argc, char** argv )
 
     create_chunk( N_u, N_v, N_r, r_min, r_max, gamma, nnodes, pts, ncells, cia, cja, types, U, V );
     for( i = 0; i < ncells; ++i )
-       ranks[i] = pvo_world_rank(); 
+       ranks[i] = pvo_world_rank();
 
     if( -1 == pvo_cookie_create( pvo_world_rank()%ni, &cookie ))
         MPI_Abort( MPI_COMM_WORLD, __LINE__ );
@@ -230,7 +230,7 @@ int main( int argc, char** argv )
 
     if( 0 == pvo_world_rank() )
         printf( " time [sec]                 : %f\n", t2-t1 );
-            
+
      N = (3*4/*pts*/ + 3*8/*U*/)*nnodes + (4/*cia*/ + 8*4/*cja*/ + 1/*types*/ + 4/*V*/ + 4/*ranks*/)*ncells;
      MPI_Allreduce( MPI_IN_PLACE, &N, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD );
     if( 0 == pvo_world_rank() )

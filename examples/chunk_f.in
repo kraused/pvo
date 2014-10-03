@@ -4,7 +4,7 @@
 &input
     r_min = 1.0     ! min value of r
     r_max = 5.0     ! max value of r
-    gamma = 0.95    
+    gamma = 0.95
     n_u   = 80      ! number of points for u
     n_v   = 80      ! number of points for v
     n_r   = 400     ! nubmer of points for r

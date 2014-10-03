@@ -162,13 +162,13 @@ contains
         integer, intent(inout) :: n_r
         real*8, intent(inout) :: r_min, r_max
         real*8 :: dr
-        integer :: n        
+        integer :: n
 
         dr = (r_max - r_min)/n_r
         n  = (1.0*n_r)/pvo_world_size()
-        
+
         if( pvo_world_size() .eq. pvo_world_rank()+1 ) then
-            ! Need to account for the possibility that n_r is not 
+            ! Need to account for the possibility that n_r is not
             ! divisible by the number of cores. This is a dump load
             ! balancing function but sufficies for meshes which are
             ! large enough
@@ -243,7 +243,7 @@ contains
         do i = 1, ncells+1
             cia(i) = 8*(i-1)
         end do
-        
+
         types = PVO_VTU_HEXAHEDRON
 
         call random_seed( size = n )

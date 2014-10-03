@@ -46,7 +46,7 @@ program pvo_vti_file_f
     integer, dimension(3,3,3) :: X
     real   , dimension(2,2,2) :: Y
     integer :: i, j, k
-   
+
     call mpi_init( ierr )
     call pvo_init( MPI_COMM_WORLD, ierr )
 
@@ -64,7 +64,7 @@ program pvo_vti_file_f
     local_extent = [ 2*pvo_world_rank(),        &
                      2*pvo_world_rank() + 2,    &
                      0, 2, 0, 2 ]
-    
+
 
     ! Write one file per processig element.
     call pvo_cookie_create( pvo_world_rank(), cookie, ierr )
@@ -78,7 +78,7 @@ program pvo_vti_file_f
         write(*,*)  'pvo_cookie_insert_var_int32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     call pvo_cookie_insert_var_float32( cookie, PVO_VAR_CELLDATA, 1, "Y"//char(0), Y, ierr )
     if( 0 .ne. ierr ) then
         write(*,*)  'pvo_cookie_insert_var_float32 failed'
@@ -110,7 +110,7 @@ program pvo_vti_file_f
         write(*,*) 'pvo_cookie_delete failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     ! Write one file in total.
     call pvo_cookie_create( 0, cookie, ierr )
     if( 0 .ne. ierr ) then
@@ -123,7 +123,7 @@ program pvo_vti_file_f
         write(*,*)  'pvo_cookie_insert_var_int32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     call pvo_cookie_insert_var_float32( cookie, PVO_VAR_CELLDATA, 1, "Y"//char(0), Y, ierr )
     if( 0 .ne. ierr ) then
         write(*,*)  'pvo_cookie_insert_var_float32 failed'

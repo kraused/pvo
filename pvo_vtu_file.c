@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -60,7 +60,7 @@ static int pvo_vtu_write_meta( pvo_file_t self, pvo_xml_file_t f )
 
         pvo_xml_file_write_element( f, "PDataArray type=\"%s\" Name=\"%s\" "
                                        "NumberOfComponents=\"%d\"",
-                                       pvo_var_type_names[p->type], 
+                                       pvo_var_type_names[p->type],
                                        p->name, p->ncomps );
     }
     pvo_xml_file_end_group( f, "PPointData" );
@@ -72,7 +72,7 @@ static int pvo_vtu_write_meta( pvo_file_t self, pvo_xml_file_t f )
 
         pvo_xml_file_write_element( f, "PDataArray type=\"%s\" Name=\"%s\" "
                                        "NumberOfComponents=\"%d\"",
-                                       pvo_var_type_names[p->type], 
+                                       pvo_var_type_names[p->type],
                                        p->name, p->ncomps );
     }
     pvo_xml_file_end_group( f, "PCellData" );
@@ -146,7 +146,7 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
                                "version=\"0.1\" "
                                "byte_order=\"%s\"", self->bo_str );
     pvo_xml_file_new_group( f, "UnstructuredGrid" );
-    pvo_xml_file_new_group( f, "Piece NumberOfPoints=\"%d\" NumberOfCells=\"%d\"", 
+    pvo_xml_file_new_group( f, "Piece NumberOfPoints=\"%d\" NumberOfCells=\"%d\"",
                                gnnodes, gncells );
 
     pvo_xml_file_new_group( f, "PointData" );
@@ -156,7 +156,7 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
 
         p->offset = offset;
         pvo_xml_file_write_element( f, "DataArray type=\"%s\" Name=\"%s\" NumberOfComponents=\"%d\" format=\"appended\" offset=\"%lu\"", pvo_var_type_names[p->type], p->name, p->ncomps, p->offset );
-        offset += pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes + 4; 
+        offset += pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes + 4;
     }
     pvo_xml_file_end_group( f, "PointData" );
 
@@ -191,11 +191,11 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
 
     pvo_xml_file_new_group( f, "AppendedData encoding=\"raw\"" );
     pvo_xml_file_write_single( f, "_", 1, MPI_CHAR );
-   
+
     for( p = self->cki->vlist; p; p = p->next ) {
         if( PVO_VAR_NODEDATA != p->grp )
             continue;
-    
+
         nbytes = pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes;
         pvo_xml_file_write_single ( f, &nbytes, 1, MPI_INT );
 
@@ -237,7 +237,7 @@ static int pvo_vtu_write_data( pvo_file_t self, pvo_xml_file_t f )
 
     pvo_var_type_mpi( PVO_VAR_INT32, &type );
     pvo_xml_file_write_ordered( f, fh->cja, fh->cia[fh->ncells], type );
-    
+
     for( i = 0; i < fh->cia[fh->ncells]; ++i )
         fh->cja[i] -= bnodes;
 
@@ -287,7 +287,7 @@ int pvo_vtu_file_open( const char*      filename,
     int err = 0;
 
     *fh = pvo_malloc( sizeof(struct pvo_vtu_file) );
-    if( -1 == pvo_file_create( filename, 
+    if( -1 == pvo_file_create( filename,
                                PVO_FILE_BYTE_ORDER_MACHINE,
                                cki,
                                &(*fh)->base ))

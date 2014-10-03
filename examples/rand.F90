@@ -84,7 +84,7 @@ program rand_f
     if( 0 .ne. ierr ) then
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     call pvo_vtp_file_open( "rand"//char(0), cookie, N, P, fh, ierr )
     if(0 .ne. ierr) then
         write(*,*) 'pvo_vtp_file_open failed'
@@ -137,10 +137,10 @@ contains
         integer, dimension(3) :: cartdim
         integer :: ierr
 
-#if 1 == PVO_HAVE_MPI       
+#if 1 == PVO_HAVE_MPI
         cartdim = (/ 0, 0, 0 /)
         call mpi_dims_create( pvo_world_size(), 3, cartdim, ierr )
- 
+
         o(1) = mod(pvo_world_rank(),cartdim(1))
         o(2) = mod((pvo_world_rank()/cartdim(1)),cartdim(2))
         o(3) = pvo_world_rank()/(cartdim(1)*cartdim(2))
@@ -159,7 +159,7 @@ contains
         integer, dimension(3) :: o
         integer, dimension(:), allocatable :: seed
         integer :: nn
-    
+
 
         call compute_offset( o )
 

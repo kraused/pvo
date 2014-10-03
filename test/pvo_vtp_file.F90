@@ -45,12 +45,12 @@ program pvo_vtp_file_f
     integer(kind = PVO_VTP_FILE_KIND) :: fh
     real, dimension(3,9) :: pt
     integer, dimension(9) :: X
-   
+
     call mpi_init( ierr )
     call pvo_init( MPI_COMM_WORLD, ierr )
 
     X   = (/ 1, 2, 3, 4, 5, 6, 7, 8, 9 /)
-    
+
     pt(1,1) = 2*pvo_world_rank() + 0.5
     pt(2,1) = 2*pvo_world_rank() + 0.5
     pt(3,1) = 2*pvo_world_rank() + 0.5
@@ -98,7 +98,7 @@ program pvo_vtp_file_f
         write(*,*)  'pvo_cookie_insert_var_int32 failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
     npoints = 9
     call pvo_vtp_file_open( "test12"//char(0), cookie, npoints, pt, fh, ierr )
     if(0 .ne. ierr) then
@@ -123,7 +123,7 @@ program pvo_vtp_file_f
         write(*,*) 'pvo_cookie_delete failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
 
     call pvo_quit( ierr )
     call mpi_finalize( ierr )

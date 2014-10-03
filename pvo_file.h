@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -64,7 +64,7 @@ struct pvo_file {
     char                        version[3];
 
     /// The byte order used
-    pvo_file_byte_order_t       bo;    
+    pvo_file_byte_order_t       bo;
 
     /// VTK conforming string representation of the byte order
     char                        bo_str[32];
@@ -72,7 +72,7 @@ struct pvo_file {
     /// The user provided cookie. The idea of the
     /// cookies is to seperate data which might be valid for
     /// different pvo_file instances (e.g., thinking about writing
-    /// the same data for different timesteps) from the 
+    /// the same data for different timesteps) from the
     /// actual file instance such that the information (and
     /// chached data) can be reused.
     ///
@@ -92,12 +92,12 @@ struct pvo_file {
     /// (e.g., unstructured meshes, poly data, ... )
     int (*write_meta)( struct pvo_file* self, pvo_xml_file_t f );
 
-    /// Write the vtx file. 
+    /// Write the vtx file.
     int (*write_data)( struct pvo_file* self, pvo_xml_file_t f );
-    
+
 };
 
-/// The pvo_file should be considered an internal datastructure. 
+/// The pvo_file should be considered an internal datastructure.
 /// We provide the opaque pvo_file_t type for external use. The
 /// library should provide all the necessary functions to access
 /// members of the pvo_file structure

@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -40,7 +40,7 @@ int pvo_cookie_create( int color, pvo_cookie_t* cookie ) {
 
     *cookie = pvo_calloc( 1, sizeof(struct pvo_cookie) );
     err     = pvo_create_island( color, &(*cookie)->island );
-    
+
     return err;
 }
 
@@ -111,7 +111,7 @@ int pvo_cookie_remove_var( pvo_cookie_t    cookie,
             continue;
 
         if( q )
-            q->next       = p->next; 
+            q->next       = p->next;
         else
             cookie->vlist = p->next;
 
@@ -142,7 +142,7 @@ int  pvo_cookie_number_var( pvo_cookie_t    cookie ) {
     }
 
     N = 0;
-    for( p = cookie->vlist; p; p = p->next ) { 
+    for( p = cookie->vlist; p; p = p->next ) {
         N += 1;
     }
 

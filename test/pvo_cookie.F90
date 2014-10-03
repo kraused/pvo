@@ -123,7 +123,7 @@ program pvo_cookie_f
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
 
-    
+
     call pvo_cookie_remove_var( cookie, "F32"//char(0), ierr )
     if(0 .ne. ierr ) then
         write(*,*) 'pvo_cookie_remove_var failed'
@@ -203,7 +203,7 @@ program pvo_cookie_f
         write(*,*) 'pvo_cookie_delete failed'
         call mpi_abort( MPI_COMM_WORLD, 1, ierr )
     endif
-    
+
 
     call pvo_quit( ierr )
     call mpi_finalize( ierr )
