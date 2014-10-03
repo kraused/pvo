@@ -66,6 +66,9 @@ LIST( APPEND SRC
 # vti files
 LIST( APPEND SRC
       pvo_vti_file.c )
+# vts files
+LIST( APPEND SRC
+      pvo_vts_file.c )
 
 ADD_LIBRARY( pvo ${SRC} )
 
@@ -110,6 +113,7 @@ INSTALL( FILES
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtp_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vtu_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vti_file.h
+         ${CMAKE_CURRENT_SOURCE_DIR}/pvo_vts_file.h
          ${CMAKE_CURRENT_SOURCE_DIR}/pvo_xml_file.h 
          DESTINATION include )
 

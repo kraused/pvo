@@ -101,6 +101,8 @@ Known Problems
 
  - pvo_vti_file supports only one file per process (i.e.,
    islands containing a single process)
+ - pvo_vts_file supports only one file per process (i.e.,
+   islands containing a single process)
 
 
 Future Directions

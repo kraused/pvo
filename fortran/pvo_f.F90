@@ -235,6 +235,26 @@ module pvo
             integer, intent(out) :: ierr
         end subroutine
 
+        subroutine pvo_vts_file_open( filename, cookie, whole_extent, ghost_level, local_extent, &
+                                      pts, fh, ierr )
+            use pvo_consts
+
+            character(len = *), intent(in) :: filename
+            integer(kind = PVO_COOKIE_KIND), intent(in) :: cookie
+            integer, dimension(6), intent(in) :: whole_extent, local_extent
+            integer, intent(in) :: ghost_level
+            real, dimension(*), intent(in) :: pts
+            integer(kind = PVO_VTP_FILE_KIND), intent(out) :: fh
+            integer, intent(out) :: ierr
+        end subroutine
+
+        subroutine pvo_vts_file_close( fh, ierr )
+            use pvo_consts
+
+            integer(kind = PVO_VTP_FILE_KIND), intent(inout) :: fh
+            integer, intent(out) :: ierr
+        end subroutine
+
     end interface
 
 end module

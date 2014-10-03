@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -84,8 +84,8 @@ void PVO_FNAME(pvo_cookie_insert_var_int32,PVO_COOKIE_INSERT_VAR_INT32)( void*  
                                                                          const char* name,
                                                                          const void* ptr,
                                                                          int*        ierr ) {
-    *ierr = pvo_cookie_insert_var(  *(pvo_cookie_t* )cookie, *grp, 
-                                    PVO_VAR_INT32, *ncomps, name, ptr );
+    *ierr = pvo_cookie_insert_var( *(pvo_cookie_t* )cookie, *grp,
+                                   PVO_VAR_INT32, *ncomps, name, ptr );
 }
 
 void PVO_FNAME(pvo_cookie_insert_var_int64,PVO_COOKIE_INSERT_VAR_INT64)( void*       cookie,
@@ -94,8 +94,8 @@ void PVO_FNAME(pvo_cookie_insert_var_int64,PVO_COOKIE_INSERT_VAR_INT64)( void*  
                                                                          const char* name,
                                                                          const void* ptr,
                                                                          int*        ierr ) {
-    *ierr = pvo_cookie_insert_var(  *(pvo_cookie_t* )cookie, *grp, 
-                                    PVO_VAR_INT64, *ncomps, name, ptr );
+    *ierr = pvo_cookie_insert_var( *(pvo_cookie_t* )cookie, *grp,
+                                   PVO_VAR_INT64, *ncomps, name, ptr );
 }
 
 void PVO_FNAME(pvo_cookie_insert_var_float32,PVO_COOKIE_INSERT_VAR_FLOAT32)( void*       cookie,
@@ -104,8 +104,8 @@ void PVO_FNAME(pvo_cookie_insert_var_float32,PVO_COOKIE_INSERT_VAR_FLOAT32)( voi
                                                                              const char* name,
                                                                              const void* ptr,
                                                                              int*        ierr ) {
-    *ierr = pvo_cookie_insert_var(  *(pvo_cookie_t* )cookie, *grp, 
-                                    PVO_VAR_FLOAT32, *ncomps, name, ptr );
+    *ierr = pvo_cookie_insert_var( *(pvo_cookie_t* )cookie, *grp,
+                                   PVO_VAR_FLOAT32, *ncomps, name, ptr );
 }
 
 void PVO_FNAME(pvo_cookie_insert_var_float64,PVO_COOKIE_INSERT_VAR_FLOAT64)( void*       cookie,
@@ -114,25 +114,25 @@ void PVO_FNAME(pvo_cookie_insert_var_float64,PVO_COOKIE_INSERT_VAR_FLOAT64)( voi
                                                                              const char* name,
                                                                              const void* ptr,
                                                                              int*        ierr ) {
-    *ierr = pvo_cookie_insert_var(  *(pvo_cookie_t* )cookie, *grp, 
-                                    PVO_VAR_FLOAT64, *ncomps, name, ptr );
+    *ierr = pvo_cookie_insert_var( *(pvo_cookie_t* )cookie, *grp,
+                                   PVO_VAR_FLOAT64, *ncomps, name, ptr );
 }
 
-void PVO_FNAME(pvo_cookie_remove_var,PVO_COOKIE_REMOVE_VAR)( void*       cookie, 
+void PVO_FNAME(pvo_cookie_remove_var,PVO_COOKIE_REMOVE_VAR)( void*       cookie,
                                                              const char* name,
-                                                             int*        ierr ) { 
+                                                             int*        ierr ) {
     *ierr = pvo_cookie_remove_var( *(pvo_cookie_t* )cookie, name );
 }
 
 void PVO_FNAME(pvo_cookie_number_var,PVO_COOKIE_NUMBER_VAR)( void* cookie, int* num, int* ierr ) {
     *num  = pvo_cookie_number_var( *(pvo_cookie_t* )cookie );
-    *ierr = 0;  /// Keep this for consistency of the Fortran interface     
+    *ierr = 0;  /// Keep this for consistency of the Fortran interface
 }
 
 /* --------------------------------------------------------------------------------
    Functions in pvo_file.h
    -------------------------------------------------------------------------------- */
-void PVO_FNAME(pvo_file_create,PVO_FILE_CREATE)( const char* filename, 
+void PVO_FNAME(pvo_file_create,PVO_FILE_CREATE)( const char* filename,
                                                  int*        bo,
                                                  void*       cookie,
                                                  long*       fh,
@@ -166,14 +166,14 @@ void PVO_FNAME(pvo_vtu_file_open,PVO_VTU_FILE_OPEN)( const char*   filename,
     size_t   i;
     uint8_t* ui8types;
 
-    /// Since we don't have a uint8_t equivalent type in Fortran we 
+    /// Since we don't have a uint8_t equivalent type in Fortran we
     /// need to copy the values over to a new array
     ui8types = pvo_malloc( (*ncells)*sizeof(uint8_t) );
     for(i = 0; i < (size_t )*ncells; ++i) {
         ui8types[i] = types[i];
     }
 
-    *ierr = pvo_vtu_file_open( filename, *(pvo_cookie_t* )cookie, *nnodes, pts, 
+    *ierr = pvo_vtu_file_open( filename, *(pvo_cookie_t* )cookie, *nnodes, pts,
                                *ncells, cia, cja, ui8types, fh );
 }
 
@@ -184,7 +184,6 @@ void PVO_FNAME(pvo_vtu_file_close,PVO_VTU_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vtu_file_close( *(pvo_vtu_file_t* )fh );
     pvo_free( ui8types );
 }
-
 
 /* --------------------------------------------------------------------------------
    Functions in pvo_vtp_file.h
@@ -202,26 +201,43 @@ void PVO_FNAME(pvo_vtp_file_close,PVO_VTP_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vtp_file_close( *(pvo_vtp_file_t* )fh );
 }
 
-
-
 /* --------------------------------------------------------------------------------
    Functions in pvo_vti_file.h
    -------------------------------------------------------------------------------- */
 void PVO_FNAME(pvo_vti_file_open,PVO_VTI_FILE_OPEN)( const char*    filename,
                                                      void*          cookie,
-                                                     const int*     whole_extent,                                                                                 
-                                                     int*           ghost_level,                                                                                  
+                                                     const int*     whole_extent,
+                                                     int*           ghost_level,
                                                      const float*   origin,
                                                      const float*   spacing,
                                                      const int*     local_extent,
                                                      void*          fh,
-                                                     int*           ierr ) { 
+                                                     int*           ierr ) {
     *ierr = pvo_vti_file_open( filename, *(pvo_cookie_t* )cookie, whole_extent,
                                *ghost_level, origin, spacing, local_extent, fh );
 }
 
 void PVO_FNAME(pvo_vti_file_close,PVO_VTI_FILE_CLOSE)( void* fh, int* ierr ) {
     *ierr = pvo_vti_file_close( *(pvo_vti_file_t* )fh );
+}
+
+/* --------------------------------------------------------------------------------
+   Functions in pvo_vts_file.h
+   -------------------------------------------------------------------------------- */
+void PVO_FNAME(pvo_vts_file_open,PVO_VTI_FILE_OPEN)( const char*    filename,
+                                                     void*          cookie,
+                                                     const int*     whole_extent,
+                                                     int*           ghost_level,
+                                                     const int*     local_extent,
+                                                     pvo_float3_t*  pts,
+                                                     void*          fh,
+                                                     int*           ierr ) {
+    *ierr = pvo_vts_file_open( filename, *(pvo_cookie_t* )cookie, whole_extent,
+                               *ghost_level, local_extent, pts, fh );
+}
+
+void PVO_FNAME(pvo_vts_file_close,PVO_VTI_FILE_CLOSE)( void* fh, int* ierr ) {
+    *ierr = pvo_vts_file_close( *(pvo_vts_file_t* )fh );
 }
 
 /* --------------------------------------------------------------------------------
@@ -236,8 +252,8 @@ void PVO_FNAME(mpi_init,MPI_INIT)( int* ierr )
     *ierr = 0;
 }
 
-void PVO_FNAME(mpi_allreduce,MPI_ALLREDUCE)( void*         sendbuf, 
-                                             void*         recvbuf, 
+void PVO_FNAME(mpi_allreduce,MPI_ALLREDUCE)( void*         sendbuf,
+                                             void*         recvbuf,
                                              int*          count,
                                              MPI_Datatype* datatype,
                                              MPI_Op*       op,
