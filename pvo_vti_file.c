@@ -2,17 +2,17 @@
 /// vim: tabstop=4:expandtab:hlsearch
 
 /* Copyright 2010 University of Lugano. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  *    1. Redistributions of source code must retain the above copyright notice, this list of
  *       conditions and the following disclaimer.
- * 
+ *
  *    2. Redistributions in binary form must reproduce the above copyright notice, this list
  *       of conditions and the following disclaimer in the documentation and/or other materials
  *       provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -22,7 +22,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of the University of Lugano.
@@ -73,7 +73,7 @@ static int pvo_vti_write_meta( pvo_file_t self, pvo_xml_file_t f )
 
         pvo_xml_file_write_element( f, "PDataArray type=\"%s\" Name=\"%s\" "
                                        "NumberOfComponents=\"%d\"",
-                                       pvo_var_type_names[p->type], 
+                                       pvo_var_type_names[p->type],
                                        p->name, p->ncomps );
     }
     pvo_xml_file_end_group( f, "PPointData" );
@@ -85,7 +85,7 @@ static int pvo_vti_write_meta( pvo_file_t self, pvo_xml_file_t f )
 
         pvo_xml_file_write_element( f, "PDataArray type=\"%s\" Name=\"%s\" "
                                        "NumberOfComponents=\"%d\"",
-                                       pvo_var_type_names[p->type], 
+                                       pvo_var_type_names[p->type],
                                        p->name, p->ncomps );
     }
     pvo_xml_file_end_group( f, "PCellData" );
@@ -155,7 +155,7 @@ static int pvo_vti_write_data( pvo_file_t self, pvo_xml_file_t f )
                                fh->piece_extent[5],
                                fh->origin[0], fh->origin[1], fh->origin[2],
                                fh->spacing[0], fh->spacing[1], fh->spacing[2] );
-    pvo_xml_file_new_group( f, "Piece Extent=\"%d %d %d %d %d %d\"", 
+    pvo_xml_file_new_group( f, "Piece Extent=\"%d %d %d %d %d %d\"",
                                fh->piece_extent[0],
                                fh->piece_extent[1],
                                fh->piece_extent[2],
@@ -170,7 +170,7 @@ static int pvo_vti_write_data( pvo_file_t self, pvo_xml_file_t f )
 
         p->offset = offset;
         pvo_xml_file_write_element( f, "DataArray type=\"%s\" Name=\"%s\" NumberOfComponents=\"%d\" format=\"appended\" offset=\"%lu\"", pvo_var_type_names[p->type], p->name, p->ncomps, p->offset );
-        offset += pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes + 4; 
+        offset += pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes + 4;
     }
     pvo_xml_file_end_group( f, "PointData" );
 
@@ -190,11 +190,11 @@ static int pvo_vti_write_data( pvo_file_t self, pvo_xml_file_t f )
 
     pvo_xml_file_new_group( f, "AppendedData encoding=\"raw\"" );
     pvo_xml_file_write_single( f, "_", 1, MPI_CHAR );
-   
+
     for( p = self->cki->vlist; p; p = p->next ) {
         if( PVO_VAR_NODEDATA != p->grp )
             continue;
-    
+
         nbytes = pvo_var_type_sizeof[p->type]*p->ncomps*gnnodes;
         pvo_xml_file_write_single ( f, &nbytes, 1, MPI_INT );
 
@@ -227,7 +227,7 @@ fn_fail:
  * processing elements in the island.
  */
 static void compute_piece_extent( pvo_cookie_t      cki,
-                                  const int32_t*    local_extent, 
+                                  const int32_t*    local_extent,
                                   int32_t*          piece_extent )
 {
     int t1[3], t2[3];
@@ -236,7 +236,7 @@ static void compute_piece_extent( pvo_cookie_t      cki,
     t1[0] = local_extent[0];
     t1[1] = local_extent[2];
     t1[2] = local_extent[4];
-    if( MPI_Reduce( t1, t2, 3, MPI_INTEGER, MPI_MIN, 0, cki->island.comm ) ) 
+    if( MPI_Reduce( t1, t2, 3, MPI_INTEGER, MPI_MIN, 0, cki->island.comm ) )
         PVO_DIE( "MPI_Reduce failed." );
     piece_extent[0] = t2[0];
     piece_extent[2] = t2[1];
@@ -293,7 +293,7 @@ int pvo_vti_file_open( const char*      filename,
     int err = 0;
 
     *fh = pvo_malloc( sizeof(struct pvo_vti_file) );
-    if( -1 == pvo_file_create( filename, 
+    if( -1 == pvo_file_create( filename,
                                PVO_FILE_BYTE_ORDER_MACHINE,
                                cki,
                                &(*fh)->base ))
@@ -319,7 +319,7 @@ int pvo_vti_file_open( const char*      filename,
     }
 
     memcpy( (*fh)->whole_extent, whole_extent, 6*sizeof(int32_t) );
-    (*fh)->ghost_level = ghost_level,
+    (*fh)->ghost_level = ghost_level;
     memcpy( (*fh)->origin      , origin      , 3*sizeof(float) );
     memcpy( (*fh)->spacing     , spacing     , 3*sizeof(float) );
     memcpy( (*fh)->local_extent, local_extent, 6*sizeof(int32_t) );
@@ -333,7 +333,7 @@ int pvo_vti_file_open( const char*      filename,
     } else {
         (*fh)->extents = NULL;
     }
-    gather_extents_on_root( cki, 
+    gather_extents_on_root( cki,
                             (*fh)->piece_extent,
                             (*fh)->extents );
 
